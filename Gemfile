@@ -6,6 +6,7 @@ gem "oj"
 gem "pg"
 gem "sequel"
 gem "sinatra", require: "sinatra/base"
+gem "sinatra-router"
 gem "sinatra-sequel"
 gem "unicorn"
 
