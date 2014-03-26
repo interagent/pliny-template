@@ -101,7 +101,7 @@ module Pliny
     end
 
     def render_template(template_file, destination_path, vars={})
-      template_path = File.dirname(__FILE__).inspect + "/templates/#{template_file}"
+      template_path = File.dirname(__FILE__) + "/templates/#{template_file}"
       template = ERB.new(File.read(template_path))
       FileUtils.mkdir_p(File.dirname(destination_path))
       File.open(destination_path, "w") do |f|
