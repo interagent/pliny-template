@@ -1,9 +1,12 @@
 module Pliny::Middleware
   class CORS
 
-    AllowMethods  = %w( GET POST PUT PATCH DELETE OPTIONS )
-    AllowHeaders  = %w( * Content-Type Accept AUTHORIZATION Cache-Control )
-    ExposeHeaders = %w( Cache-Control Content-Language Content-Type Expires Last-Modified Pragma )
+    ALLOW_METHODS  =
+      %w( GET POST PUT PATCH DELETE OPTIONS ).freeze
+    ALLOW_HEADERS  =
+      %w( * Content-Type Accept AUTHORIZATION Cache-Control ).freeze
+    EXPOSE_HEADERS =
+      %w( Cache-Control Content-Language Content-Type Expires Last-Modified Pragma ).freeze
 
     def initialize(app)
       @app = app
@@ -31,12 +34,12 @@ module Pliny::Middleware
 
     def cors_headers(env)
       {
-        'Access-Control-Allow-Origin' => env["HTTP_ORIGIN"],
-        'Access-Control-Allow-Methods' => AllowMethods.join(', '),
-        'Access-Control-Allow-Headers' => AllowHeaders.join(', '),
+        'Access-Control-Allow-Origin'      => env["HTTP_ORIGIN"],
+        'Access-Control-Allow-Methods'     => ALLOW_METHODS.join(', '),
+        'Access-Control-Allow-Headers'     => ALLOW_HEADERS.join(', '),
         'Access-Control-Allow-Credentials' => "true",
-        'Access-Control-Max-Age' => "1728000",
-        'Access-Control-Expose-Headers' => ExposeHeaders.join(', ')
+        'Access-Control-Max-Age'           => "1728000",
+        'Access-Control-Expose-Headers'    => EXPOSE_HEADERS.join(', ')
       }
     end
   end
