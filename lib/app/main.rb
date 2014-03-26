@@ -1,5 +1,6 @@
 module App
   Main = Rack::Builder.new do
+    use Honeybadger::Rack
     use Rack::Instruments
 
     use Sinatra::Router do
