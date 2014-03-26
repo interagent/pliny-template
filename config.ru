@@ -6,4 +6,4 @@ require "./lib/pliny"
 
 $stdout.sync = true
 
-run Pliny
+run Pliny::Main
