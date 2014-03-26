@@ -8,6 +8,9 @@ GEM
   remote: https://rubygems.org/
   specs:
     backports (2.6.5)
+    honeybadger (1.11.2)
+      json
+    json (1.8.1)
     kgio (2.9.2)
     multi_json (1.9.2)
     oj (2.6.1)
@@ -46,6 +49,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  honeybadger
   multi_json
   oj
   pg
