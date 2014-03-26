@@ -5,14 +5,15 @@ require "active_support/inflector"
 
 module Pliny
   class Generator
-    attr_accessor :args
+    attr_accessor :args, :stream
 
-    def self.run(args)
+    def self.run(args, stream=$stdout)
       new(args).run!
     end
 
-    def initialize(args={})
+    def initialize(args={}, stream=$stdout)
       @args = args
+      @stream = stream
     end
 
     def type
@@ -29,6 +30,10 @@ module Pliny
 
     def table_name
       name.tableize
+    end
+
+    def display(msg)
+      stream.puts msg
     end
 
     def run!
@@ -61,43 +66,43 @@ module Pliny
         class_name: class_name,
         url_path:   url_path,
       })
-      puts "created endpoint file #{endpoint}"
-      puts "add the following to lib/app/main:"
-      puts "  use App::Main::#{class_name}"
+      display "created endpoint file #{endpoint}"
+      display "add the following to lib/app/main:"
+      display "  use App::Main::#{class_name}"
 
       test = "./test/endpoints/#{name}_test.rb"
       render_template("endpoint_test.erb", test, {
         class_name: class_name,
         url_path:   url_path,
       })
-      puts "created test #{test}"
+      display "created test #{test}"
     end
 
     def create_mediator
       model = "./lib/mediators/#{name}.rb"
       render_template("mediator.erb", model, class_name: class_name)
-      puts "created mediator file #{model}"
+      display "created mediator file #{model}"
     end
 
     def create_migration
       migration = "./db/migrate/#{Time.now.to_i}_#{name}.rb"
       render_template("migration.erb", migration)
-      puts "created migration #{migration}"
+      display "created migration #{migration}"
     end
 
     def create_model
       model = "./lib/models/#{name}.rb"
       render_template("model.erb", model, class_name: class_name)
-      puts "created model file #{model}"
+      display "created model file #{model}"
 
       migration = "./db/migrate/#{Time.now.to_i}_create_#{table_name}.rb"
       render_template("model_migration.erb", migration,
         table_name: table_name)
-      puts "created migration #{migration}"
+      display "created migration #{migration}"
 
       test = "./test/models/#{name}_test.rb"
       render_template("model_test.erb", test, class_name: class_name)
-      puts "created test #{test}"
+      display "created test #{test}"
     end
 
     def render_template(template_file, destination_path, vars={})
