@@ -1,4 +1,7 @@
 #!/usr/bin/env ruby
 
-require "./vendor/pliny/generator"
+require "bundler"
+Bundler.require
+require "pliny/generator"
+
 Pliny::Generator.run(ARGV.dup)
