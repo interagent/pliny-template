@@ -5,7 +5,7 @@ gem "multi_json"
 gem "oj"
 gem "pg"
 gem "sequel"
-gem "sinatra"
+gem "sinatra", require: "sinatra/base"
 gem "sinatra-sequel"
 gem "unicorn"
 
