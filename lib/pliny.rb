@@ -1,10 +1,12 @@
-abort("Missing DATABASE_URL") unless ENV["DATABASE_URL"]
-
 module Pliny
+  def self.initialize!
+    require_relative_glob("initializers/*.rb")
+  end
+
   # Requires an entire directory of source files in a stable way so that file
   # hierarchy is respected for load order.
   def self.require_relative_glob(relative_path)
-    files = Dir["#{Pliny.root}/lib/pliny/#{relative_path}"].sort_by do |file|
+    files = Dir["#{Pliny.root}/#{relative_path}"].sort_by do |file|
       [file.count("/"), file]
     end
 
@@ -20,6 +22,6 @@ end
 
 require_relative "pliny/endpoints/base"
 
-Pliny.require_relative_glob("pliny/endpoints/**/*.rb")
+Pliny.require_relative_glob("lib/pliny/endpoints/**/*.rb")
 
 require_relative "pliny/main"
