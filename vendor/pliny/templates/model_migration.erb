@@ -6,8 +6,4 @@ Sequel.migration do
       timestamp   :updated_at
     end
   end
-
-  down do
-    drop_table(:<%= table_name %>)
-  end
 end
