@@ -2,6 +2,7 @@ Routes = Rack::Builder.new do
   use Honeybadger::Rack
   use Rack::Instruments
   use Pliny::Middleware::CORS
+  use Pliny::Middleware::RequestID
 
   use Sinatra::Router do
     # mount all individual Sinatra apps here

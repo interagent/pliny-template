@@ -3,6 +3,7 @@ require "pliny/generator"
 require "pliny/log"
 require "pliny/utils"
 require "pliny/middleware/cors"
+require "pliny/middleware/request_id"
 
 module Pliny
   extend Log
