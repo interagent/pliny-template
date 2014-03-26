@@ -10,10 +10,10 @@ require "rr"
 
 require_relative "../lib/app"
 
-Pliny.initialize!
-
 class MiniTest::Spec
   include Rack::Test::Methods
 end
 
 ENV.update(Pliny::Utils.parse_env("#{Pliny.root}/.env.test"))
+
+Pliny.initialize!
