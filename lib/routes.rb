@@ -1,4 +1,4 @@
-Main = Rack::Builder.new do
+Routes = Rack::Builder.new do
   use Honeybadger::Rack
   use Rack::Instruments
   use Pliny::Middleware::CORS

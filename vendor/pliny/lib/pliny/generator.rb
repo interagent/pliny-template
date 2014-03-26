@@ -61,7 +61,7 @@ module Pliny
     def create_endpoint
       url_path   = "/" + name.gsub(/_/, '-')
 
-      endpoint = "./lib/app/endpoints/#{name}.rb"
+      endpoint = "./lib/endpoints/#{name}.rb"
       render_template("endpoint.erb", endpoint, {
         class_name: class_name,
         url_path:   url_path,

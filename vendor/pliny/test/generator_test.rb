@@ -31,6 +31,21 @@ describe Pliny::Generator do
       Timecop.return
     end
 
+    describe "generating endpoints" do
+      before do
+        @gen.args = ["endpoint", "artists"]
+        @gen.run!
+      end
+
+      it "creates a new endpoint module" do
+        assert File.exists?("lib/endpoints/artists.rb")
+      end
+
+      it "creates an endpoint test" do
+        assert File.exists?("test/endpoints/artists_test.rb")
+      end
+    end
+
     describe "generating models" do
       before do
         @gen.args = ["model", "artist"]
