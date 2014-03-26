@@ -1,4 +1,4 @@
-module Pliny::Endpoints
+module App::Endpoints
   class Root < Base
     get "/" do
       "hello."

@@ -8,9 +8,4 @@ module Pliny
   end
 end
 
-require_relative "pliny/endpoints/base"
 require_relative "pliny/utils"
-
-Pliny::Utils.require_relative_glob("lib/pliny/endpoints/**/*.rb")
-
-require_relative "pliny/main"
