@@ -9,12 +9,26 @@ case ARGV.first
     name = ARGV[1] || abort("Missing model name")
     class_name = name.capitalize
     file_name  = name.downcase
+
+    # create model
     template = ERB.new(File.read("./vendor/pliny/templates/model.erb"))
     FileUtils.mkdir_p "./lib/models"
-    File.open("./lib/models/#{file_name}.rb", "w") do |f|
+    model_file = "./lib/models/#{file_name}.rb"
+    File.open(model_file, "w") do |f|
       vars = OpenStruct.new(class_name: class_name)
       f.puts template.result(vars.instance_eval { binding })
     end
+    puts "created model file #{model_file}"
+
+    # create migration
+    template = ERB.new(File.read("./vendor/pliny/templates/migration.erb"))
+    FileUtils.mkdir_p "./db/migrate"
+    migration_file = "./db/migrate/#{Time.now.to_i}_create_#{file_name}.rb"
+    File.open(migration_file, "w") do |f|
+      vars = OpenStruct.new(table_name: "#{file_name}s") # use pluralize?
+      f.puts template.result(vars.instance_eval { binding })
+    end
+    puts "created migration #{migration_file}"
   else
     abort("Don't know how to generate #{ARGV.first}")
 end
