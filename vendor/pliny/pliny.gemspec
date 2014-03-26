@@ -2,8 +2,8 @@ Gem::Specification.new do |gem|
   gem.name    = "pliny"
   gem.version = "0.0.1"
 
-  gem.author      = "Brandur and Pedro"
-  gem.email       = "brandur@mutelight.org"
+  gem.authors     = ["Brandur Leach", "Pedro Belo"]
+  gem.email       = ["brandur@mutelight.org", "pedrobelo@gmail.com"]
   gem.homepage    = "https://github.com/heroku/pliny"
   gem.summary     = "Basic tooling to support API apps in Sinatra"
   gem.description = "Pliny is a set of base classes and helpers to help developers write excellent APIs in Sinatra"
