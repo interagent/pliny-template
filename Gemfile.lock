@@ -2,6 +2,7 @@ PATH
   remote: vendor/pliny
   specs:
     pliny (0.0.1)
+      sinatra
 
 GEM
   remote: https://rubygems.org/
