@@ -8,4 +8,4 @@ $stdout.sync = true
 
 Pliny.initialize!
 
-run App::Main
+run Routes

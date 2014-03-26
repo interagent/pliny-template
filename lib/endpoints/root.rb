@@ -1,4 +1,4 @@
-module App::Endpoints
+module Endpoints
   class Root < Base
     get "/" do
       "hello."

@@ -1,8 +1,8 @@
 module App
 end
 
-require_relative "app/endpoints/base"
+require_relative "endpoints/base"
 
-Pliny::Utils.require_relative_glob("lib/app/endpoints/**/*.rb")
+Pliny::Utils.require_relative_glob("lib/endpoints/**/*.rb")
 
-require_relative "app/main"
+require_relative "routes"
