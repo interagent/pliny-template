@@ -1,5 +1,7 @@
 module Pliny
   Main = Rack::Builder.new do
+    use Rack::Instruments
+
     use Sinatra::Router do
       mount Pliny::Endpoints::Apps
 
