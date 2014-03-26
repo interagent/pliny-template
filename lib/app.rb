@@ -1,6 +1,4 @@
 # before anything else, pull in the main Pliny package
-require_relative "../vendor/pliny"
-
 module App
 end
 

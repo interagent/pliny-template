@@ -1,3 +1,8 @@
+PATH
+  remote: vendor/pliny
+  specs:
+    pliny (0.0.1)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -43,6 +48,7 @@ DEPENDENCIES
   multi_json
   oj
   pg
+  pliny!
   rack-instruments
   rack-test
   rr
