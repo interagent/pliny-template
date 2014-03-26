@@ -1,6 +1,11 @@
 require "sinatra"
+require "pliny/log"
+require "pliny/utils"
+require "pliny/middleware/cors"
 
 module Pliny
+  extend Log
+
   def self.initialize!
     Utils.require_relative_glob("config/initializers/*.rb")
   end
@@ -9,7 +14,3 @@ module Pliny
     @@root ||= File.expand_path("../../../../", __FILE__)
   end
 end
-
-require_relative "pliny/utils"
-
-require_relative "pliny/middleware/cors"
