@@ -1,4 +1,5 @@
 require "sinatra"
+require "pliny/generator"
 require "pliny/log"
 require "pliny/utils"
 require "pliny/middleware/cors"

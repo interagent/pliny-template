@@ -1,44 +1,62 @@
 require "erb"
 require "fileutils"
 require "ostruct"
+require "active_support/inflector"
 
 module Pliny
   class Generator
-    attr_accessor :type
+    attr_accessor :args
 
     def self.run(args)
       new(args).run!
     end
 
-    def initialize(args)
-      @type = args.first
+    def initialize(args={})
+      @args = args
+    end
+
+    def type
+      @args.first
+    end
+
+    def name
+      args[1]
+    end
+
+    def class_name
+      name.camelize
+    end
+
+    def table_name
+      name.tableize
     end
 
     def run!
-      case @type
+      unless type
+        raise "Missing type of object to generate"
+      end
+      unless name
+        raise "Missing #{type} name"
+      end
+
+      case type
       when "endpoint"
-        name = ARGV[1] || abort("Missing endpoint name")
-        create_endpoint(name)
+        create_endpoint
       when "mediator"
-        name = ARGV[1] || abort("Missing mediator name")
-        create_mediator(name)
+        create_mediator
       when "migration"
-        name = ARGV[1] || abort("Missing migration name")
-        create_migration(name)
+        create_migration
       when "model"
-        name = ARGV[1] || abort("Missing model name")
-        create_model(name)
+        create_model
       else
-        abort("Don't know how to generate #{@type}.")
+        abort("Don't know how to generate '#{type}'.")
       end
     end
 
-    def create_endpoint(name)
-      class_name = name.capitalize
-      file_name  = name.downcase
-      url_path   = "/" + file_name.gsub(/_/, '-')
+    def create_endpoint
+      url_path   = "/" + name.gsub(/_/, '-')
 
-      endpoint = "./lib/app/endpoints/#{file_name}.rb"
+      endpoint = "./lib/app/endpoints/#{name}.rb"
       render_template("endpoint.erb", endpoint, {
         class_name: class_name,
         url_path:   url_path,
@@ -47,7 +65,7 @@ module Pliny
       puts "add the following to lib/app/main:"
       puts "  use App::Main::#{class_name}"
 
-      test = "./test/endpoints/#{file_name}_test.rb"
+      test = "./test/endpoints/#{name}_test.rb"
       render_template("endpoint_test.erb", test, {
         class_name: class_name,
         url_path:   url_path,
@@ -55,42 +73,35 @@ module Pliny
       puts "created test #{test}"
     end
 
-    def create_mediator(name)
-      class_name = name.capitalize
-      file_name  = name.downcase
-
-      model = "./lib/mediators/#{file_name}.rb"
+    def create_mediator
+      model = "./lib/mediators/#{name}.rb"
       render_template("mediator.erb", model, class_name: class_name)
       puts "created mediator file #{model}"
     end
 
-    def create_migration(name)
-      file_name = name.downcase
-      migration = "./db/migrate/#{Time.now.to_i}_#{file_name}.rb"
+    def create_migration
+      migration = "./db/migrate/#{Time.now.to_i}_#{name}.rb"
       render_template("migration.erb", migration)
       puts "created migration #{migration}"
     end
 
-    def create_model(name)
-      class_name = name.capitalize
-      file_name  = name.downcase
-
-      model = "./lib/models/#{file_name}.rb"
+    def create_model
+      model = "./lib/models/#{name}.rb"
       render_template("model.erb", model, class_name: class_name)
       puts "created model file #{model}"
 
-      migration = "./db/migrate/#{Time.now.to_i}_create_#{file_name}.rb"
+      migration = "./db/migrate/#{Time.now.to_i}_create_#{table_name}.rb"
       render_template("model_migration.erb", migration,
-        table_name: "#{file_name}s")
+        table_name: table_name)
       puts "created migration #{migration}"
 
-      test = "./test/models/#{file_name}_test.rb"
+      test = "./test/models/#{name}_test.rb"
       render_template("model_test.erb", test, class_name: class_name)
       puts "created test #{test}"
     end
 
     def render_template(template_file, destination_path, vars={})
-      template_path = "./vendor/pliny/templates/#{template_file}"
+      template_path = File.dirname(__FILE__).inspect + "/templates/#{template_file}"
       template = ERB.new(File.read(template_path))
       FileUtils.mkdir_p(File.dirname(destination_path))
       File.open(destination_path, "w") do |f|
