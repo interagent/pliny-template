@@ -1,10 +1,10 @@
 module Pliny
   Main = Rack::Builder.new do
     use Sinatra::Router do
-      mount Pliny::Endpoints::Root
+      mount Pliny::Endpoints::Apps
 
       # provides some default handlers like 404
-      run Pliny::Endpoints::Default
+      run Pliny::Endpoints::Root
     end
   end
 end

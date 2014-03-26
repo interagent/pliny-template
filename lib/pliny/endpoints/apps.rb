@@ -1,4 +1,4 @@
 module Pliny::Endpoints
-  class Default < Base
+  class Apps < Base
   end
 end
