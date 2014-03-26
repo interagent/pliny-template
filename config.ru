@@ -6,4 +6,6 @@ require "./lib/pliny"
 
 $stdout.sync = true
 
+Pliny.initialize!
+
 run Pliny::Main
