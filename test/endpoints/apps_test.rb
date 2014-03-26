@@ -1,8 +1,8 @@
 require "test_helper"
 
-describe App::Endpoints::Apps do
+describe Endpoints::Apps do
   def app
-    App::Endpoints::Apps
+    Endpoints::Apps
   end
 
   describe "GET /" do
