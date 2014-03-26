@@ -2,10 +2,10 @@ require "rubygems"
 require "bundler"
 
 Bundler.require
-require "./lib/pliny"
+require "./lib/app"
 
 $stdout.sync = true
 
 Pliny.initialize!
 
-run Pliny::Main
+run App::Main

@@ -1,4 +1,4 @@
-module Pliny::Endpoints
+module App::Endpoints
   class Apps < Base
     namespace "/apps" do
       get do

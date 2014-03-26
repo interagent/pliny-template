@@ -1,4 +1,4 @@
-module Pliny::Endpoints
+module App::Endpoints
   # The base class for all Sinatra-based endpoints. Use sparingly.
   class Base < Sinatra::Base
     register Sinatra::Namespace

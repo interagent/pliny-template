@@ -8,7 +8,7 @@ Bundler.require(:default, :test)
 require "minitest/autorun"
 require "rr"
 
-require_relative "../lib/pliny"
+require_relative "../lib/app"
 
 class MiniTest::Spec
   include Rack::Test::Methods

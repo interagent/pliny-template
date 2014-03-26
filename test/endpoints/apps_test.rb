@@ -1,8 +1,8 @@
 require "test_helper"
 
-describe Pliny::Endpoints::Apps do
+describe App::Endpoints::Apps do
   def app
-    Pliny::Endpoints::Apps
+    App::Endpoints::Apps
   end
 
   describe "GET /" do
