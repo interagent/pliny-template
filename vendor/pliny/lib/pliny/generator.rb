@@ -16,6 +16,9 @@ module Pliny
 
     def run!
       case @type
+      when "endpoint"
+        name = ARGV[1] || abort("Missing endpoint name")
+        create_endpoint(name)
       when "mediator"
         name = ARGV[1] || abort("Missing mediator name")
         create_mediator(name)
@@ -28,6 +31,28 @@ module Pliny
       else
         abort("Don't know how to generate #{@type}.")
       end
+    end
+
+    def create_endpoint(name)
+      class_name = name.capitalize
+      file_name  = name.downcase
+      url_path   = "/" + file_name.gsub(/_/, '-')
+
+      endpoint = "./lib/app/endpoints/#{file_name}.rb"
+      render_template("endpoint.erb", endpoint, {
+        class_name: class_name,
+        url_path:   url_path,
+      })
+      puts "created endpoint file #{endpoint}"
+      puts "add the following to lib/app/main:"
+      puts "  use App::Main::#{class_name}"
+
+      test = "./test/endpoints/#{file_name}_test.rb"
+      render_template("endpoint_test.erb", test, {
+        class_name: class_name,
+        url_path:   url_path,
+      })
+      puts "created test #{test}"
     end
 
     def create_mediator(name)

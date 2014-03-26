@@ -1,0 +1,14 @@
+require "test_helper"
+
+describe App::Endpoints::<%= class_name %> do
+  def app
+    App::Endpoints::<%= class_name %>
+  end
+
+  describe "GET <%= url_path %>" do
+    it "succeeds" do
+      get "<%= url_path %>"
+      assert_equal 200, last_response.status
+    end
+  end
+end
