@@ -5,7 +5,7 @@ namespace :db do
     Rake::Task['environment'].invoke(env)
 
     require 'sequel/extensions/migration'
-    Sequel::Migrator.apply(Sequel::Model.db, "db/migrate")
+    Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate")
     puts "Migrated to the latest"
   end
 
@@ -15,7 +15,7 @@ namespace :db do
     Rake::Task['environment'].invoke(env)
 
     require 'sequel/extensions/migration'
-    Sequel::Migrator.apply(Sequel::Model.db, "db/migrate", -1)
+    Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate", -1)
     puts "Rolled back."
   end
 
