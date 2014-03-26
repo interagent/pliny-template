@@ -10,6 +10,8 @@ require "rr"
 
 require_relative "../lib/pliny"
 
+Pliny.initialize!
+
 class MiniTest::Spec
   include Rack::Test::Methods
 end
