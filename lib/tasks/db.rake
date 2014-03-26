@@ -1,4 +1,3 @@
-
 namespace :db do
   desc "Run database migrations"
   task :migrate, :env do |cmd, args|
