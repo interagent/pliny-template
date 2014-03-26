@@ -1,4 +1,3 @@
-# before anything else, pull in the main Pliny package
 module App
 end
 
