@@ -44,6 +44,8 @@ module Pliny
         url_path:   url_path,
       })
       puts "created endpoint file #{endpoint}"
+      puts "add the following to lib/app/main:"
+      puts "  use App::Main::#{class_name}"
 
       test = "./test/endpoints/#{file_name}_test.rb"
       render_template("endpoint_test.erb", test, {
