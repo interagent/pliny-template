@@ -33,7 +33,8 @@ module Pliny
       puts "created model file #{model}"
 
       migration = "./db/migrate/#{Time.now.to_i}_create_#{file_name}.rb"
-      render_template("migration.erb", migration, table_name: "#{file_name}s")
+      render_template("model_migration.erb", migration,
+        table_name: "#{file_name}s")
       puts "created migration #{migration}"
     end
 
