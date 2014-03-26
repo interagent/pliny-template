@@ -16,15 +16,22 @@ module Pliny
 
     def run!
       case @type
-      when "model"
-        name = ARGV[1] || abort("Missing model name")
-        create_model(name)
       when "migration"
         name = ARGV[1] || abort("Missing migration name")
         create_migration(name)
+      when "model"
+        name = ARGV[1] || abort("Missing model name")
+        create_model(name)
       else
         abort("Don't know how to generate #{@type}.")
       end
+    end
+
+    def create_migration(name)
+      file_name = name.downcase
+      migration = "./db/migrate/#{Time.now.to_i}_#{file_name}.rb"
+      render_template("migration.erb", migration)
+      puts "created migration #{migration}"
     end
 
     def create_model(name)
@@ -38,13 +45,6 @@ module Pliny
       migration = "./db/migrate/#{Time.now.to_i}_create_#{file_name}.rb"
       render_template("model_migration.erb", migration,
         table_name: "#{file_name}s")
-      puts "created migration #{migration}"
-    end
-
-    def create_migration(name)
-      file_name = name.downcase
-      migration = "./db/migrate/#{Time.now.to_i}_#{file_name}.rb"
-      render_template("migration.erb", migration)
       puts "created migration #{migration}"
     end
 
