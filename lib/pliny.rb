@@ -1,7 +1,7 @@
 module Pliny
   def self.require_relative_glob(relative_path)
-    Dir[].each do |file|
-      require "#{Pliny.root}/lib/pliny/#{relative_path}"
+    Dir["#{Pliny.root}/lib/pliny/#{relative_path}"].each do |file|
+      require file
     end
   end
 
