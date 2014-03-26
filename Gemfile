@@ -14,5 +14,4 @@ gem "unicorn"
 group :test do
   gem "rack-test"
   gem "rr", require: false
-  gem "rspec"
 end
