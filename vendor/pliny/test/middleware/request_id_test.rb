@@ -15,7 +15,7 @@ describe Pliny::Middleware::RequestID do
     end
   end
 
-  it "tags responses with Request-ID" do
+  it "tags responses with Request-Id" do
     get "/"
     assert_match Pliny::Middleware::RequestID::UUID_PATTERN,
       last_response.headers["Request-Id"]
