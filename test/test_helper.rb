@@ -17,5 +17,3 @@ class MiniTest::Spec
 end
 
 ENV.update(Pliny::Utils.parse_env("#{Pliny.root}/.env.test"))
-
-Pliny.initialize!
