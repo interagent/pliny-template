@@ -16,6 +16,9 @@ module Pliny
 
     def run!
       case @type
+      when "mediator"
+        name = ARGV[1] || abort("Missing mediator name")
+        create_mediator(name)
       when "migration"
         name = ARGV[1] || abort("Missing migration name")
         create_migration(name)
@@ -25,6 +28,15 @@ module Pliny
       else
         abort("Don't know how to generate #{@type}.")
       end
+    end
+
+    def create_mediator(name)
+      class_name = name.capitalize
+      file_name  = name.downcase
+
+      model = "./lib/mediators/#{file_name}.rb"
+      render_template("mediator.erb", model, class_name: class_name)
+      puts "created mediator file #{model}"
     end
 
     def create_migration(name)
