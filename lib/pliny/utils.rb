@@ -1,0 +1,27 @@
+module Pliny
+  module Utils
+    def self.parse_env(file)
+      env = {}
+      File.open(file).each do |line|
+        line = line.gsub(/#.*$/, '').strip
+        next if line.empty?
+        var, value = line.split("=", 2)
+        value.gsub!(/^['"](.*)['"]$/, '\1')
+        env[var] = value
+      end
+      env
+    end
+
+    # Requires an entire directory of source files in a stable way so that file
+    # hierarchy is respected for load order.
+    def self.require_relative_glob(relative_path)
+      files = Dir["#{Pliny.root}/#{relative_path}"].sort_by do |file|
+        [file.count("/"), file]
+      end
+
+      files.each do |file|
+        require file
+      end
+    end
+  end
+end

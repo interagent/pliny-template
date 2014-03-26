@@ -1,18 +1,6 @@
 module Pliny
   def self.initialize!
-    require_relative_glob("config/initializers/*.rb")
-  end
-
-  # Requires an entire directory of source files in a stable way so that file
-  # hierarchy is respected for load order.
-  def self.require_relative_glob(relative_path)
-    files = Dir["#{Pliny.root}/#{relative_path}"].sort_by do |file|
-      [file.count("/"), file]
-    end
-
-    files.each do |file|
-      require file
-    end
+    Utils.require_relative_glob("config/initializers/*.rb")
   end
 
   def self.root
@@ -21,7 +9,8 @@ module Pliny
 end
 
 require_relative "pliny/endpoints/base"
+require_relative "pliny/utils"
 
-Pliny.require_relative_glob("lib/pliny/endpoints/**/*.rb")
+Pliny::Utils.require_relative_glob("lib/pliny/endpoints/**/*.rb")
 
 require_relative "pliny/main"

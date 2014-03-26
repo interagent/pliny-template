@@ -7,3 +7,11 @@ bundle install
 createdb pliny-development
 foreman start web
 ``
+
+## Tests
+
+```
+gem install rake
+createdb pliny-test
+rake
+```
