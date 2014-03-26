@@ -1,3 +1,5 @@
+require "sinatra"
+
 module Pliny
   def self.initialize!
     Utils.require_relative_glob("config/initializers/*.rb")
@@ -9,3 +11,5 @@ module Pliny
 end
 
 require_relative "pliny/utils"
+
+require_relative "pliny/middleware/cors"

@@ -1,6 +1,7 @@
 module App
   Main = Rack::Builder.new do
     use Rack::Instruments
+    use Pliny::Middleware::CORS
 
     use Sinatra::Router do
       # mount all individual Sinatra apps here
