@@ -1,11 +1,15 @@
 module Pliny
   module Log
     def log(data, &block)
-      log_to_stream(@stdout || $stdout, data, &block)
+      log_to_stream(stdout || $stdout, data, &block)
     end
 
     def stdout=(stream)
-      @stdout = stream
+      @@stdout = stream
+    end
+
+    def stdout
+      @@stdout
     end
 
     private
