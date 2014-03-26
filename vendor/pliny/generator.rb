@@ -58,6 +58,10 @@ module Pliny
       render_template("model_migration.erb", migration,
         table_name: "#{file_name}s")
       puts "created migration #{migration}"
+
+      test = "./test/models/#{file_name}_test.rb"
+      render_template("model_test.erb", test, class_name: class_name)
+      puts "created test #{test}"
     end
 
     def render_template(template_file, destination_path, vars={})
