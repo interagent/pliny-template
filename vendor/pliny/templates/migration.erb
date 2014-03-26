@@ -2,8 +2,8 @@ Sequel.migration do
   change do
     create_table(:<%= table_name %>) do
       primary_key :id
-      datetime    :created_at
-      datetime    :updated_at
+      timestamp   :created_at
+      timestamp   :updated_at
     end
   end
 
