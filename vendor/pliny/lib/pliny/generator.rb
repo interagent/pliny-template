@@ -44,6 +44,13 @@ module Pliny
         url_path:   url_path,
       })
       puts "created endpoint file #{endpoint}"
+
+      test = "./test/endpoints/#{file_name}_test.rb"
+      render_template("endpoint_test.erb", test, {
+        class_name: class_name,
+        url_path:   url_path,
+      })
+      puts "created test #{test}"
     end
 
     def create_mediator(name)
