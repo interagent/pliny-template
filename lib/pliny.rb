@@ -1,6 +1,6 @@
 module Pliny
   def self.initialize!
-    require_relative_glob("initializers/*.rb")
+    require_relative_glob("config/initializers/*.rb")
   end
 
   # Requires an entire directory of source files in a stable way so that file
