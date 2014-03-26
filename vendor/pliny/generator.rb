@@ -19,6 +19,9 @@ module Pliny
       when "model"
         name = ARGV[1] || abort("Missing model name")
         create_model(name)
+      when "migration"
+        name = ARGV[1] || abort("Missing migration name")
+        create_migration(name)
       else
         abort("Don't know how to generate #{@type}.")
       end
@@ -38,7 +41,14 @@ module Pliny
       puts "created migration #{migration}"
     end
 
-    def render_template(template_file, destination_path, vars)
+    def create_migration(name)
+      file_name = name.downcase
+      migration = "./db/migrate/#{Time.now.to_i}_#{file_name}.rb"
+      render_template("migration.erb", migration)
+      puts "created migration #{migration}"
+    end
+
+    def render_template(template_file, destination_path, vars={})
       template_path = "./vendor/pliny/templates/#{template_file}"
       template = ERB.new(File.read(template_path))
       FileUtils.mkdir_p(File.dirname(destination_path))
