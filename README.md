@@ -7,6 +7,7 @@ It bundles some of the patterns we like to develop these apps:
 - Models: very thin wrappers around the database
 - Mediators: plain ruby classes to manipulate models
 - Endpoints: the Sinatra equivalent of a Rails Controller
+- Initializers: tiny files to configure libraries/etc (equivalent of Rails)
 
 And gems/helpers to tie these together and support operations:
 
