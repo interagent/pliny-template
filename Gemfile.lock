@@ -26,8 +26,6 @@ GEM
     oj (2.6.1)
     pg (0.17.1)
     rack (1.5.2)
-    rack-instruments (0.3.2)
-      slides (~> 0.2.0)
     rack-protection (1.5.2)
       rack
     rack-test (0.6.2)
@@ -51,7 +49,6 @@ GEM
       tilt (~> 1.3)
     sinatra-router (0.2.3)
       sinatra (~> 1.4)
-    slides (0.2.0)
     thread_safe (0.3.1)
       atomic (>= 1.1.7, < 2)
     tilt (1.4.1)
@@ -70,7 +67,6 @@ DEPENDENCIES
   oj
   pg
   pliny!
-  rack-instruments
   rack-test
   rr
   sequel
