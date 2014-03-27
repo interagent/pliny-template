@@ -44,6 +44,12 @@ created base mediator ./lib/mediators/base.rb
 created mediator file ./lib/mediators/artist_creator.rb
 created test ./test/mediators/artist_creator_test.rb
 
+$ bin/generate endpoint artists
+created endpoint file ./lib/endpoints/artists.rb
+add the following to lib/app/main:
+  use App::Main::Artists
+created test ./test/endpoints/artists_test.rb
+
 $ bin/generate migration fix_something
 created migration ./db/migrate/1395873228_fix_something.rb
 ```
