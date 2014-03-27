@@ -12,5 +12,6 @@ Gem::Specification.new do |gem|
   gem.files = %x{ git ls-files }.split("\n").select { |d| d =~ %r{^(License|README|bin/|data/|ext/|lib/|spec/|test/)} }
 
   gem.add_dependency "activesupport"
+  gem.add_dependency "multi_json"
   gem.add_dependency "sinatra"
 end
