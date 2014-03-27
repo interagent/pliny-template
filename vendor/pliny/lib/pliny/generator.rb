@@ -67,7 +67,7 @@ module Pliny
         url_path:   url_path,
       })
       display "created endpoint file #{endpoint}"
-      display "add the following to lib/app/main:"
+      display "add the following to lib/routes:"
       display "  use App::Main::#{class_name}"
 
       test = "./test/endpoints/#{name}_test.rb"
