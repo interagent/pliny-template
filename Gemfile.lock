@@ -35,6 +35,9 @@ GEM
     raindrops (0.13.0)
     rr (1.1.2)
     sequel (4.8.0)
+    sequel_pg (1.6.9)
+      pg (>= 0.8.0)
+      sequel (>= 3.39.0)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -71,6 +74,7 @@ DEPENDENCIES
   rack-test
   rr
   sequel
+  sequel_pg
   sinatra
   sinatra-contrib
   sinatra-router
