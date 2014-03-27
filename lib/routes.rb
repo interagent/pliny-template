@@ -1,4 +1,5 @@
 Routes = Rack::Builder.new do
+  use Pliny::Middleware::RescueErrors
   use Honeybadger::Rack
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID

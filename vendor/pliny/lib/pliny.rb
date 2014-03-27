@@ -1,3 +1,4 @@
+require "multi_json"
 require "sinatra"
 
 module Pliny ; end
@@ -11,6 +12,7 @@ require "pliny/utils"
 require "pliny/middleware/cors"
 require "pliny/middleware/request_id"
 require "pliny/middleware/request_store"
+require "pliny/middleware/rescue_errors"
 require "pliny/middleware/timeout"
 
 module Pliny

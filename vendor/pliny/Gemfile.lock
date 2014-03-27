@@ -3,6 +3,7 @@ PATH
   specs:
     pliny (0.0.1)
       activesupport
+      multi_json
       sinatra
 
 GEM
