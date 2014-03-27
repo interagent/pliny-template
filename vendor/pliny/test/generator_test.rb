@@ -46,6 +46,17 @@ describe Pliny::Generator do
       end
     end
 
+    describe "generating mediators" do
+      before do
+        @gen.args = ["mediator", "artists/creator"]
+        @gen.run!
+      end
+
+      it "creates a new endpoint module" do
+        assert File.exists?("lib/mediators/artists/creator.rb")
+      end
+    end
+
     describe "generating models" do
       before do
         @gen.args = ["model", "artist"]
