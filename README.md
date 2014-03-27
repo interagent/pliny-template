@@ -25,7 +25,7 @@ And gems/helpers to tie these together and support operations:
 
 To get started:
 
-```
+```bash
 bundle install
 createdb pliny-development
 foreman start web
@@ -33,7 +33,7 @@ foreman start web
 
 There are some generators to help you get started:
 
-```
+```bash
 $ bin/generate model artist
 created model file ./lib/models/artist.rb
 created migration ./db/migrate/1395873224_create_artist.rb
@@ -49,7 +49,13 @@ created migration ./db/migrate/1395873228_fix_something.rb
 
 You can then test your application:
 
-```
+```bash
 createdb pliny-test
 rake
+```
+
+And boot a web server:
+
+```bash
+foreman start
 ```
