@@ -68,7 +68,7 @@ module Pliny
       })
       display "created endpoint file #{endpoint}"
       display "add the following to lib/routes:"
-      display "  use App::Main::#{class_name}"
+      display "  use Endpoints::#{class_name}"
 
       test = "./test/endpoints/#{name}_test.rb"
       render_template("endpoint_test.erb", test, {
