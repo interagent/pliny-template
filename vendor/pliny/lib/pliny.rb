@@ -1,5 +1,8 @@
 require "sinatra"
 
+module Pliny ; end
+
+require "pliny/extensions/instruments"
 require "pliny/generator"
 require "pliny/log"
 require "pliny/request_store"

@@ -6,11 +6,11 @@ module Pliny
     end
 
     def stdout=(stream)
-      @@stdout = stream
+      @stdout = stream
     end
 
     def stdout
-      @@stdout
+      @stdout
     end
 
     private
