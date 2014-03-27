@@ -1,0 +1,5 @@
+class Mediators::Base
+  def self.run(options={})
+    new(options).call
+  end
+end

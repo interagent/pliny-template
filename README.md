@@ -40,6 +40,7 @@ created migration ./db/migrate/1395873224_create_artist.rb
 created test ./test/models/artist_test.rb
 
 $ bin/generate mediator artist_creator
+created base mediator ./lib/mediators/base.rb
 created mediator file ./lib/mediators/artist_creator.rb
 created test ./test/mediators/artist_creator_test.rb
 
