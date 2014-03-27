@@ -1,8 +1,6 @@
 require "test_helper"
 
 describe Pliny::Middleware::CORS do
-  include Rack::Test::Methods
-
   def app
     Rack::Builder.new do
       use Rack::Lint
