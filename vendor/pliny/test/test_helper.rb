@@ -10,3 +10,11 @@ require "minitest/autorun"
 require "rr"
 
 require_relative "../lib/pliny"
+
+class MiniTest::Spec
+  include Rack::Test::Methods
+
+  before do
+    Pliny::RequestStore.clear!
+  end
+end

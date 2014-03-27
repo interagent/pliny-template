@@ -1,6 +1,7 @@
 module Pliny
   module Log
     def log(data, &block)
+      data = log_context.merge(data)
       log_to_stream(stdout || $stdout, data, &block)
     end
 
@@ -13,6 +14,10 @@ module Pliny
     end
 
     private
+
+    def log_context
+      RequestStore.store[:log_context] || {}
+    end
 
     def log_to_stream(stream, data, &block)
       unless block

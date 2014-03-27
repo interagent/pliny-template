@@ -18,4 +18,10 @@ describe Pliny::Log do
     Pliny.log(foo: "bar") do
     end
   end
+
+  it "merges context from RequestStore" do
+    Pliny::RequestStore.store[:log_context] = { app: "pliny" }
+    mock(@io).puts "app=pliny foo=bar"
+    Pliny.log(foo: "bar")
+  end
 end
