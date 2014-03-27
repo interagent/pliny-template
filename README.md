@@ -26,9 +26,9 @@ And gems/helpers to tie these together and support operations:
 To get started:
 
 ```bash
-bundle install
-createdb pliny-development
-foreman start web
+$ bundle install
+$ createdb pliny-development
+$ foreman start web
 ```
 
 There are some generators to help you get started:
@@ -47,15 +47,9 @@ $ bin/generate migration fix_something
 created migration ./db/migrate/1395873228_fix_something.rb
 ```
 
-You can then test your application:
+To test your application:
 
 ```bash
 createdb pliny-test
 rake
-```
-
-And boot a web server:
-
-```bash
-foreman start
 ```
