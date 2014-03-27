@@ -1,6 +1,5 @@
 namespace :bundler do
   task :setup do
-    require "rubygems"
     require "bundler/setup"
     Bundler.require
   end
