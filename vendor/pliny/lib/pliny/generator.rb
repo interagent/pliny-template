@@ -87,6 +87,10 @@ module Pliny
       mediator = "./lib/mediators/#{name}.rb"
       render_template("mediator.erb", mediator, class_name: class_name)
       display "created mediator file #{mediator}"
+
+      test = "./test/mediators/#{name}_test.rb"
+      render_template("mediator_test.erb", test, class_name: class_name)
+      display "created test #{test}"
     end
 
     def create_migration

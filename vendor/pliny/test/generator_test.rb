@@ -55,6 +55,10 @@ describe Pliny::Generator do
       it "creates a new endpoint module" do
         assert File.exists?("lib/mediators/artists/creator.rb")
       end
+
+      it "creates a test" do
+        assert File.exists?("test/mediators/artists/creator_test.rb")
+      end
     end
 
     describe "generating models" do
