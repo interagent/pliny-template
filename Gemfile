@@ -9,7 +9,7 @@ gem "pliny", path: "vendor/pliny"
 gem "sequel"
 gem "sequel_pg", require: "sequel"
 gem "sinatra", require: "sinatra/base"
-gem "sinatra-contrib", require: ["sinatra/namespace"]
+gem "sinatra-contrib", require: ["sinatra/namespace", "sinatra/reloader"]
 gem "sinatra-router"
 gem "unicorn"
 
