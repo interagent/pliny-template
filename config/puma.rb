@@ -1,9 +1,10 @@
-environment (ENV["RACK_ENV"] || "development")
-port ENV["PORT"] || 5000
+require "./config/config"
+
+environment Config.rack_env
+port Config.port
 quiet
-threads Integer(ENV['PUMA_MIN_THREADS']  || 1),
-  Integer(ENV['PUMA_MAX_THREADS'] || 16)
-workers Integer(ENV['PUMA_WORKERS'] || 3)
+threads Config.puma_min_threads.to_i, Config.puma_max_threads.to_i
+workers Config.puma_workers.to_i
 
 on_worker_boot do
   # force Sequel's thread pool to be refreshed
