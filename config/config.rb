@@ -13,12 +13,15 @@ require "pliny/config_helpers"
 module Config
   extend Pliny::ConfigHelpers
 
+  # Mandatory -- exception is raised for these variables when missing.
   mandatory \
     :database_url
 
+  # Optional -- value is returned or `nil` if it wasn't present.
   optional \
     :placeholder
 
+  # Override -- value is returned or the set default. Remember to typecast.
   override \
     port:             5000,
     puma_max_threads: 16,
