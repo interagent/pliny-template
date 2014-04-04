@@ -1,4 +1,4 @@
-threads 8, 32
+threads 1, 16
 workers 3
 
 on_worker_boot do
