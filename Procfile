@@ -1,1 +1,1 @@
-web: bundle exec unicorn -p $PORT -c ./config/unicorn.rb
+web: bundle exec puma --quiet --threads 8:32 --port $PORT --preload --workers 3 config.ru
