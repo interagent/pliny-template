@@ -1,1 +1,1 @@
-web: bundle exec puma --quiet --threads 8:32 --port $PORT --preload --workers 3 config.ru
+web: bundle exec puma --config config/puma.rb --environment $RACK_ENV --quiet --port $PORT config.ru
