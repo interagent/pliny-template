@@ -15,13 +15,13 @@ And gems/helpers to tie these together and support operations:
 - [Honeybadger](https://www.honeybadger.io/) for tracking exceptions
 - [Log as data helpers](vendor/pliny/test/log_test.rb)
 - [Minitest](https://github.com/seattlerb/minitest) for lean and fast testing
+- [Puma](http://puma.io/) as the web server, [configured for optimal performance on Heroku](config/puma.rb)
 - [Rack-test](https://github.com/brynary/rack-test) to test the API endpoints
 - [Request IDs](vendor/pliny/lib/pliny/middleware/request_id.rb)
 - [RequestStore](http://brandur.org/antipatterns), thread safe option to store data with the current request
 - [RR](https://github.com/rr/rr/blob/master/doc/03_api_overview.md) for amazing mocks and stubs
 - [Sequel](http://sequel.jeremyevans.net/) for ORM
 - [Sequel-PG](https://github.com/jeremyevans/sequel_pg) because fuck mysql
-- [Unicorn](http://unicorn.bogomips.org/) as the web server, [configured for optimal performance on Heroku](config/unicorn.rb)
 
 ## Getting started
 
