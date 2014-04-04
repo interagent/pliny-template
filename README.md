@@ -4,6 +4,7 @@ Pliny is a template Sinatra app for postgres-backed APIs.
 
 It bundles some of the patterns we like to develop these apps:
 
+- Config: `ENV` wrapper for explicit defining what config vars are mandatory and optional
 - Models: very thin wrappers around the database
 - Mediators: plain ruby classes to manipulate models
 - Endpoints: the Sinatra equivalent of a Rails Controller
