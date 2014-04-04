@@ -23,7 +23,9 @@ And gems/helpers to tie these together and support operations:
 - [Sequel-PG](https://github.com/jeremyevans/sequel_pg) because fuck mysql
 - [Unicorn](http://unicorn.bogomips.org/) as the web server, [configured for optimal performance on Heroku](config/unicorn.rb)
 
-To get started:
+## Getting started
+
+Clone this repo, then:
 
 ```bash
 $ bundle install
@@ -60,3 +62,7 @@ To test your application:
 createdb pliny-test
 rake
 ```
+
+## Meta
+
+Created by Brandur Leach and Pedro Belo.
