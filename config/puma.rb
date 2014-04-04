@@ -1,3 +1,6 @@
+environment (ENV["RACK_ENV"] || "development")
+port ENV["PORT"] || 5000
+quiet
 threads 1, 16
 workers 3
 
