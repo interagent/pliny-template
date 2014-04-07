@@ -16,3 +16,5 @@ end
 ENV.update(Pliny::Utils.parse_env("#{Pliny.root}/.env.test"))
 
 Pliny.initialize!
+
+require_relative "../lib/models"
