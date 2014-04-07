@@ -7,4 +7,6 @@ $stdout.sync = true
 
 Pliny.initialize!
 
+require "./lib/models"
+
 run Routes
