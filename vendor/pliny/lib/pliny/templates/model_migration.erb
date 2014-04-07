@@ -2,7 +2,7 @@ Sequel.migration do
   change do
     create_table(:<%= table_name %>) do
       uuid         :uuid, primary_key: true, default: Sequel.function(:uuid_generate_v4)
-      timestamptz  :created_at
+      timestamptz  :created_at, default: Sequel.function(:now)
       timestamptz  :updated_at
       timestamptz  :deleted_at
     end
