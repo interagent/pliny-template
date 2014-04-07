@@ -1,5 +1,3 @@
-require "uri"
-
 namespace :db do
   desc "Run database migrations"
   task :migrate, :env do |cmd, args|
@@ -36,6 +34,7 @@ namespace :db do
 
   desc "Create the database"
   task :create, :env do |cmd, args|
+    require "uri"
     require "sequel"
     uri = URI.join(ENV["DATABASE_URL"], "/").to_s
     db = Sequel.connect(uri)
@@ -46,6 +45,7 @@ namespace :db do
 
   desc "Drop the database"
   task :drop, :env do |cmd, args|
+    require "uri"
     require "sequel"
     uri = URI.join(ENV["DATABASE_URL"], "/").to_s
     db = Sequel.connect(uri)
