@@ -57,10 +57,9 @@ namespace :db do
   namespace :schema do
     desc "Load the database schema"
     task :load, :env do |cmd, args|
-      env = args[:env] || "development"
-      Rake::Task['environment'].invoke(env)
+      db = Sequel.connect(ENV["DATABASE_URL"])
       schema = File.read("./db/schema.sql")
-      Sequel::Model.db.run(schema)
+      db.run(schema)
       puts "Loaded schema"
     end
 
