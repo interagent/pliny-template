@@ -24,7 +24,7 @@ namespace :db do
     env = args[:env] || "development"
     Rake::Task['environment'].invoke(env)
     Sequel::Model.db.tables.each do |table|
-      Sequel::Model.db.run("DROP TABLE #{table}")
+      Sequel::Model.db.run(%{DROP TABLE "#{table}"})
     end
     puts "Nuked database"
   end
