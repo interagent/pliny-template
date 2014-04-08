@@ -70,4 +70,7 @@ namespace :db do
       puts "Dumped schema"
     end
   end
+
+  desc "Setup the database"
+  task :setup, [:env] => [:drop, :create, "schema:load"]
 end
