@@ -1,28 +1,25 @@
+require "uri"
+require "sequel"
+require "sequel/extensions/migration"
+
 namespace :db do
   desc "Run database migrations"
   task :migrate, :env do |cmd, args|
-    env = args[:env] || "development"
-    Rake::Task['environment'].invoke(env)
-
-    require 'sequel/extensions/migration'
+    Sequel.connect(ENV["DATABASE_URL"])
     Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate")
     puts "Migrated to the latest"
   end
 
   desc "Rollback the database"
   task :rollback, :env do |cmd, args|
-    env = args[:env] || "development"
-    Rake::Task['environment'].invoke(env)
-
-    require 'sequel/extensions/migration'
+    Sequel.connect(ENV["DATABASE_URL"])
     Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate", -1)
     puts "Rolled back."
   end
 
   desc "Nuke the database (drop all tables)"
   task :nuke, :env do |cmd, args|
-    env = args[:env] || "development"
-    Rake::Task['environment'].invoke(env)
+    Sequel.connect(ENV["DATABASE_URL"])
     Sequel::Model.db.tables.each do |table|
       Sequel::Model.db.run(%{DROP TABLE "#{table}"})
     end
@@ -34,8 +31,6 @@ namespace :db do
 
   desc "Create the database"
   task :create, :env do |cmd, args|
-    require "uri"
-    require "sequel"
     uri = URI.join(ENV["DATABASE_URL"], "/").to_s
     db = Sequel.connect(uri)
     name = URI.parse(ENV["DATABASE_URL"]).path[1..-1]
@@ -45,8 +40,6 @@ namespace :db do
 
   desc "Drop the database"
   task :drop, :env do |cmd, args|
-    require "uri"
-    require "sequel"
     uri = URI.join(ENV["DATABASE_URL"], "/").to_s
     db = Sequel.connect(uri)
     name = URI.parse(ENV["DATABASE_URL"]).path[1..-1]
