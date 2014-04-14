@@ -5,7 +5,7 @@ require "./lib/app"
 
 $stdout.sync = true
 
-Pliny.initialize!
+App.initialize!
 
 require "./lib/models"
 
