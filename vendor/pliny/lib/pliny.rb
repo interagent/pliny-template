@@ -4,6 +4,7 @@ require "sinatra"
 module Pliny ; end
 
 require "pliny/commands/generator"
+require "pliny/commands/migrator"
 require "pliny/error"
 require "pliny/extensions/instruments"
 require "pliny/log"
