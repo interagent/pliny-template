@@ -4,6 +4,8 @@ module Pliny::Commands
       loop do
         if File.exists?(File.expand_path(".env", Dir.pwd))
           break
+        elsif File.exists?(File.expand_path(".env.test", Dir.pwd))
+          break
         else
           Dir.chdir("..")
         end
@@ -20,7 +22,7 @@ module Pliny::Commands
 
     def envs
       %w(.env .env.test).map { |env_file|
-        env_path = File.expand_path(env_file, Dir.pwd)
+        env_path = File.expand_path(env_file, root)
         if File.exists?(env_path)
           [env_file, Pliny::Utils.parse_env(env_path)]
         else
