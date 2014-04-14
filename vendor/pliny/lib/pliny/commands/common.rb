@@ -1,5 +1,3 @@
-
-
 module Pliny::Commands
   module Common
     def chroot!
