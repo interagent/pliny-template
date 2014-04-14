@@ -3,6 +3,8 @@ require "sequel/extensions/migration"
 
 module Pliny::Commands
   class Migrator
+    include Common
+
     def self.run(args, stream=$stdout)
       new(args).run!
     end
@@ -13,8 +15,7 @@ module Pliny::Commands
     end
 
     def run!
-      root = find_root
-      display "Root is #{root}"
+      chroot!
       if no_migrations?
         display "No pending migrations"
       else
@@ -29,40 +30,6 @@ module Pliny::Commands
     private
 
     attr_accessor :args, :stream
-
-    def display(msg)
-      stream.puts msg
-    end
-
-    def panic(msg)
-      $stderr.puts msg
-      exit 1
-    end
-
-    def envs
-      %w(.env .env.test).map { |env_file|
-        env_path = File.expand_path(env_file, Dir.pwd)
-        if File.exists?(env_path)
-          [env_file, Pliny::Utils.parse_env(env_path)]
-        else
-          nil
-        end
-      }.compact
-    end
-
-    def find_root
-      loop do
-      p Dir.pwd
-        if File.exists?(File.expand_path(".env", Dir.pwd))
-          return Dir.pwd
-        else
-          Dir.chdir("..")
-        end
-        if Pathname.new(Dir.pwd).root?
-          panic "No project found"
-        end
-      end
-    end
 
     def migrations_path
       File.expand_path("db/migrate", Dir.pwd)
