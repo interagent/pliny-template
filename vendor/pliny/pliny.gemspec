@@ -14,5 +14,6 @@ Gem::Specification.new do |gem|
 
   gem.add_dependency "activesupport"
   gem.add_dependency "multi_json"
+  gem.add_dependency "sequel"
   gem.add_dependency "sinatra"
 end
