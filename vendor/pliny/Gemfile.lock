@@ -4,6 +4,8 @@ PATH
     pliny (0.0.1)
       activesupport
       multi_json
+      pg
+      sequel
       sinatra
 
 GEM
@@ -19,12 +21,14 @@ GEM
     i18n (0.6.9)
     minitest (4.7.5)
     multi_json (1.9.2)
+    pg (0.17.1)
     rack (1.5.2)
     rack-protection (1.5.2)
       rack
     rack-test (0.6.2)
       rack (>= 1.0)
     rr (1.1.2)
+    sequel (4.8.0)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
