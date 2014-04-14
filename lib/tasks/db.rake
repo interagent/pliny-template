@@ -5,6 +5,7 @@ require "sequel/extensions/migration"
 namespace :db do
   desc "Run database migrations"
   task :migrate, :env do |cmd, args|
+    next if Dir["./db/migrate/*.rb"].empty?
     Sequel.connect(ENV["DATABASE_URL"])
     Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate")
     puts "Migrated to the latest"
@@ -12,6 +13,7 @@ namespace :db do
 
   desc "Rollback the database"
   task :rollback, :env do |cmd, args|
+    next if Dir["./db/migrate/*.rb"].empty?
     Sequel.connect(ENV["DATABASE_URL"])
     Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate", -1)
     puts "Rolled back."
@@ -64,5 +66,5 @@ namespace :db do
   end
 
   desc "Setup the database"
-  task :setup, [:env] => [:drop, :create, "schema:load"]
+  task :setup, [:env] => [:drop, :create]
 end
