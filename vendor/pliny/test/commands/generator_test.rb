@@ -1,8 +1,8 @@
 require "test_helper"
 
-describe Pliny::Generator do
+describe Pliny::Commands::Generator do
   before do
-    @gen = Pliny::Generator.new({}, StringIO.new)
+    @gen = Pliny::Commands::Generator.new({}, StringIO.new)
   end
 
   describe "#class_name" do

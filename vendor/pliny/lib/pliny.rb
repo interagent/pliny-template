@@ -3,9 +3,9 @@ require "sinatra"
 
 module Pliny ; end
 
+require "pliny/commands/generator"
 require "pliny/error"
 require "pliny/extensions/instruments"
-require "pliny/generator"
 require "pliny/log"
 require "pliny/request_store"
 require "pliny/utils"
