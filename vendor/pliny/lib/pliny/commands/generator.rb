@@ -5,8 +5,6 @@ require "active_support/inflector"
 
 module Pliny::Commands
   class Generator
-    attr_accessor :args, :stream
-
     def self.run(args, stream=$stdout)
       new(args).run!
     end
@@ -14,26 +12,6 @@ module Pliny::Commands
     def initialize(args={}, stream=$stdout)
       @args = args
       @stream = stream
-    end
-
-    def type
-      @args.first
-    end
-
-    def name
-      args[1]
-    end
-
-    def class_name
-      name.camelize
-    end
-
-    def table_name
-      name.tableize
-    end
-
-    def display(msg)
-      stream.puts msg
     end
 
     def run!
@@ -56,6 +34,30 @@ module Pliny::Commands
       else
         abort("Don't know how to generate '#{type}'.")
       end
+    end
+
+    private
+
+    attr_accessor :args, :stream
+
+    def type
+      args.first
+    end
+
+    def name
+      args[1]
+    end
+
+    def class_name
+      name.camelize
+    end
+
+    def table_name
+      name.tableize
+    end
+
+    def display(msg)
+      stream.puts msg
     end
 
     def create_endpoint
