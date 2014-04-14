@@ -14,8 +14,8 @@ module Pliny
 
     # Requires an entire directory of source files in a stable way so that file
     # hierarchy is respected for load order.
-    def self.require_relative_glob(relative_path)
-      files = Dir["#{Pliny.root}/#{relative_path}"].sort_by do |file|
+    def self.require_relative_glob(path)
+      files = Dir[path].sort_by do |file|
         [file.count("/"), file]
       end
 
