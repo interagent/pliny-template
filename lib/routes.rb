@@ -1,5 +1,5 @@
 Routes = Rack::Builder.new do
-  use Pliny::Middleware::RescueErrors
+  use Pliny::Middleware::RescueErrors unless Config.rack_env == "development"
   use Honeybadger::Rack
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID
