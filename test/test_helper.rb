@@ -13,8 +13,8 @@ class MiniTest::Spec
   include Rack::Test::Methods
 end
 
-ENV.update(Pliny::Utils.parse_env("#{Pliny.root}/.env.test"))
+ENV.update(Pliny::Utils.parse_env("#{App.root}/.env.test"))
 
-Pliny.initialize!
+App.initialize!
 
 require_relative "../lib/models"
