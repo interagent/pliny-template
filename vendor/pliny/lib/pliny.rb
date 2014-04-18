@@ -16,6 +16,7 @@ require "pliny/middleware/request_id"
 require "pliny/middleware/request_store"
 require "pliny/middleware/rescue_errors"
 require "pliny/middleware/timeout"
+require "pliny/middleware/versioning"
 
 module Pliny
   extend Log

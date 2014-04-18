@@ -23,6 +23,7 @@ And gems/helpers to tie these together and support operations:
 - [RR](https://github.com/rr/rr/blob/master/doc/03_api_overview.md) for amazing mocks and stubs
 - [Sequel](http://sequel.jeremyevans.net/) for ORM
 - [Sequel-PG](https://github.com/jeremyevans/sequel_pg) because fuck mysql
+- [Versioning](vendor/pliny/lib/pliny/middleware/versioning.rb) to allow versioning your API in the HTTP Accept header
 
 ## Getting started
 
