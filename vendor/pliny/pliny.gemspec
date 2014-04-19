@@ -17,4 +17,6 @@ Gem::Specification.new do |gem|
   gem.add_dependency "pg"
   gem.add_dependency "sequel"
   gem.add_dependency "sinatra"
+  gem.add_dependency "http_accept"
+  gem.add_dependency "sinatra-router"
 end

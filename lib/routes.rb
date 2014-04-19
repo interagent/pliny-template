@@ -8,8 +8,8 @@ Routes = Rack::Builder.new do
   use Rack::Deflater
   use Rack::MethodOverride
 
-  use Sinatra::Router do
-    # mount all individual Sinatra apps here
+  use Pliny::Router do
+    # mount all endpoints here
   end
 
   # root app; but will also handle some defaults like 404
