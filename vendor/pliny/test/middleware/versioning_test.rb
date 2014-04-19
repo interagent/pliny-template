@@ -1,5 +1,4 @@
 require "test_helper"
-require 'json'
 
 describe Pliny::Middleware::Versioning do
   include Rack::Test::Methods
@@ -10,7 +9,7 @@ describe Pliny::Middleware::Versioning do
       use Pliny::Middleware::Versioning, default: '2', app_name: 'pliny'
       run Sinatra.new {
         get "/" do
-          env.to_json
+          MultiJson.encode env
         end
       }
     end
@@ -18,7 +17,7 @@ describe Pliny::Middleware::Versioning do
 
   it "produces default version on application/json" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/json'}
-    json = JSON.parse(last_response.body)
+    json = MultiJson.decode(last_response.body)
     assert_equal 'application/json', json['HTTP_ACCEPT']
     assert_equal '2', json['HTTP_X_API_VERSION']
   end
@@ -30,19 +29,19 @@ Please specify a version along with the MIME type. For example, `Accept: applica
     eos
 
     assert_equal 400, last_response.status
-    assert_equal error.to_json, last_response.body
+    assert_equal MultiJson.encode(error), last_response.body
   end
 
   it "ignores a wrong app name" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.chuck_norris+json'}
-    json = JSON.parse(last_response.body)
+    json = MultiJson.decode(last_response.body)
     assert_equal 'application/vnd.chuck_norris+json', json['HTTP_ACCEPT']
     assert_equal '2', json['HTTP_X_API_VERSION']
   end
 
   it "produces a version on application/vnd.pliny+json; version=3" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3'}
-    json = JSON.parse(last_response.body)
+    json = MultiJson.decode(last_response.body)
     assert_equal 'application/json', json['HTTP_ACCEPT']
     assert_equal '3', json['HTTP_X_API_VERSION']
   end
@@ -50,14 +49,14 @@ Please specify a version along with the MIME type. For example, `Accept: applica
   # this behavior is pretty sketchy, but a pretty extreme edge case
   it "handles multiple MIME types" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=3; q=0.5, text/xml'}
-    json = JSON.parse(last_response.body)
+    json = MultiJson.decode(last_response.body)
     assert_equal 'text/xml, application/json; q=0.5', json['HTTP_ACCEPT']
     assert_equal '3', json['HTTP_X_API_VERSION']
   end
 
   it "produces the priority version on multiple types" do
     get '/', {}, {'HTTP_ACCEPT' => 'application/vnd.pliny+json; version=4; q=0.5, application/vnd.pliny+json; version=3'}
-    json = JSON.parse(last_response.body)
+    json = MultiJson.decode(last_response.body)
     assert_equal 'application/json, application/json; q=0.5', json['HTTP_ACCEPT']
     assert_equal '3', json['HTTP_X_API_VERSION']
   end
