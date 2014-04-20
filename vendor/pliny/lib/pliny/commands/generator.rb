@@ -88,11 +88,6 @@ module Pliny::Commands
     end
 
     def create_mediator
-      base_mediator = "./lib/mediators/base.rb"
-      unless File.exists?(base_mediator)
-        render_template("base_mediator.erb", base_mediator)
-        display "created base mediator #{base_mediator}"
-      end
       mediator = "./lib/mediators/#{name}.rb"
       render_template("mediator.erb", mediator, class_name: class_name)
       display "created mediator file #{mediator}"

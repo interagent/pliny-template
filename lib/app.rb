@@ -3,19 +3,21 @@ module App
     Pliny::Utils.require_glob("#{App.root}/config/initializers/*.rb")
   end
 
+  def self.require!(globs)
+    globs.map { |f| App.root + "/" + f + ".rb" }.
+      each { |f| Pliny::Utils.require_glob(f) }
+  end
+
   def self.root
     @@root ||= File.expand_path("../../", __FILE__)
   end
 end
 
-require_relative "../config/config"
-
-require_relative "endpoints/base"
-Pliny::Utils.require_glob("#{App.root}/lib/endpoints/**/*.rb")
-
-if File.exists?("#{App.root}/lib/mediators/base.rb")
-  require_relative "mediators/base"
-  Pliny::Utils.require_glob("#{App.root}/lib/mediators/**/*.rb")
-end
-
-require_relative "routes"
+App.require!([
+  "config/config",
+  "lib/endpoints/base",
+  "lib/endpoints/**/*",
+  "lib/mediators/base",
+  "lib/mediators/**/*",
+  "lib/routes",
+])
