@@ -30,8 +30,7 @@ And gems/helpers to tie these together and support operations:
 Clone this repo, then:
 
 ```bash
-$ bundle install
-$ createdb pliny-development
+$ bin/setup
 $ foreman start web
 ```
 
