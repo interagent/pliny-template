@@ -1,0 +1,13 @@
+require "test_helper"
+
+describe Endpoints::<%= class_name %> do
+  def app
+    Routes
+  end
+
+  it "GET <%= url_path %>" do
+    get "<%= url_path %>"
+    assert_equal 200, last_response.status
+    assert_equal [], MultiJson.decode(last_response.body)
+  end
+end
