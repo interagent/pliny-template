@@ -8,12 +8,13 @@ module App
   end
 end
 
-require_relative "../config/config"
-
-require_relative "endpoints/base"
-Pliny::Utils.require_glob("#{App.root}/lib/endpoints/**/*.rb")
-
-require_relative "mediators/base"
-Pliny::Utils.require_glob("#{App.root}/lib/mediators/**/*.rb")
-
-require_relative "routes"
+[
+  "config/config",
+  "lib/endpoints/base",
+  "lib/endpoints/**/*",
+  "lib/mediators/base",
+  "lib/mediators/**/*",
+  "lib/routes",
+].
+map { |f| App.root + "/" + f + ".rb" }.
+each { |f| Pliny::Utils.require_glob(f) }
