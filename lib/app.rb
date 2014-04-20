@@ -13,9 +13,7 @@ require_relative "../config/config"
 require_relative "endpoints/base"
 Pliny::Utils.require_glob("#{App.root}/lib/endpoints/**/*.rb")
 
-if File.exists?("#{App.root}/lib/mediators/base.rb")
-  require_relative "mediators/base"
-  Pliny::Utils.require_glob("#{App.root}/lib/mediators/**/*.rb")
-end
+require_relative "mediators/base"
+Pliny::Utils.require_glob("#{App.root}/lib/mediators/**/*.rb")
 
 require_relative "routes"
