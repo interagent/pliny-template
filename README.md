@@ -38,23 +38,23 @@ $ foreman start web
 There are some generators to help you get started:
 
 ```bash
-$ bin/generate model artist
+$ bundle exec pliny-generate model artist
 created model file ./lib/models/artist.rb
 created migration ./db/migrate/1395873224_create_artist.rb
 created test ./test/models/artist_test.rb
 
-$ bin/generate mediator artists/creator
+$ bundle exec pliny-generate mediator artists/creator
 created base mediator ./lib/mediators/base.rb
 created mediator file ./lib/mediators/artists/creator.rb
 created test ./test/mediators/artists/creator_test.rb
 
-$ bin/generate endpoint artists
+$ bundle exec pliny-generate endpoint artists
 created endpoint file ./lib/endpoints/artists.rb
 add the following to lib/app/main:
   use App::Main::Artists
 created test ./test/endpoints/artists_test.rb
 
-$ bin/generate migration fix_something
+$ bundle exec pliny-generate migration fix_something
 created migration ./db/migrate/1395873228_fix_something.rb
 ```
 
