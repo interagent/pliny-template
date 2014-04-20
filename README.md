@@ -1,6 +1,6 @@
 # Pliny
 
-Pliny is a template Sinatra app for postgres-backed APIs.
+Opinionated template Sinatra app for writing excellent APIs in Ruby.
 
 It bundles some of the patterns we like to develop these apps:
 
