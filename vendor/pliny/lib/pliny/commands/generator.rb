@@ -78,6 +78,13 @@ module Pliny::Commands
         url_path:   url_path,
       })
       display "created test #{test}"
+
+      test = "./test/acceptance/#{name}_test.rb"
+      render_template("endpoint_acceptance_test.erb", test, {
+        class_name: class_name,
+        url_path:   url_path,
+      })
+      display "created test #{test}"
     end
 
     def create_mediator
