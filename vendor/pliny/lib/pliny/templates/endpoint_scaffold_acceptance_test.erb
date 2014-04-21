@@ -26,8 +26,29 @@ describe Endpoints::<%= plural_class_name %> do
     assert_schema_conform
   end
 
+=begin
+  it "POST <%= url_path %>" do
+    post "<%= url_path %>", MultiJson.encode({})
+    assert_equal 201, last_response.status
+    assert_schema_conform
+  end
+=end
+
   it "GET <%= url_path %>/:id" do
     get "<%= url_path %>/#{@<%= field_name %>.uuid}"
+    assert_equal 200, last_response.status
+    assert_schema_conform
+  end
+
+  it "PATCH <%= url_path %>/:id" do
+    header "Content-Type", "application/json"
+    patch "<%= url_path %>/#{@<%= field_name %>.uuid}", MultiJson.encode({})
+    assert_equal 200, last_response.status
+    assert_schema_conform
+  end
+
+  it "GET <%= url_path %>/:id" do
+    delete "<%= url_path %>/#{@<%= field_name %>.uuid}"
     assert_equal 200, last_response.status
     assert_schema_conform
   end
