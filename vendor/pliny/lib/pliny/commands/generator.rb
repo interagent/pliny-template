@@ -28,12 +28,25 @@ module Pliny::Commands
       case type
       when "endpoint"
         create_endpoint
+        create_endpoint_test
+        create_endpoint_acceptance_test
       when "mediator"
         create_mediator
+        create_mediator_test
       when "migration"
         create_migration
       when "model"
         create_model
+        create_model_migration
+        create_model_test
+      when "scaffold"
+        create_endpoint
+        create_endpoint_test
+        create_endpoint_acceptance_test
+        create_model
+        create_model_migration
+        create_model_test
+        create_schema
       when "schema"
         create_schema
       else
@@ -62,8 +75,6 @@ module Pliny::Commands
     end
 
     def create_endpoint
-      url_path   = "/" + name.gsub(/_/, '-')
-
       endpoint = "./lib/endpoints/#{name.singularize}.rb"
       render_template("endpoint.erb", endpoint, {
         class_name: class_name,
@@ -72,14 +83,18 @@ module Pliny::Commands
       display "created endpoint file #{endpoint}"
       display "add the following to lib/routes.rb:"
       display "  use Endpoints::#{class_name}"
+    end
 
+    def create_endpoint_test
       test = "./test/endpoints/#{name}_test.rb"
       render_template("endpoint_test.erb", test, {
         class_name: class_name,
         url_path:   url_path,
       })
       display "created test #{test}"
+    end
 
+    def create_endpoint_acceptance_test
       test = "./test/acceptance/#{name.singularize}_test.rb"
       render_template("endpoint_acceptance_test.erb", test, {
         class_name: class_name,
@@ -92,7 +107,9 @@ module Pliny::Commands
       mediator = "./lib/mediators/#{name}.rb"
       render_template("mediator.erb", mediator, class_name: class_name)
       display "created mediator file #{mediator}"
+    end
 
+    def create_mediator_test
       test = "./test/mediators/#{name}_test.rb"
       render_template("mediator_test.erb", test, class_name: class_name)
       display "created test #{test}"
@@ -108,12 +125,16 @@ module Pliny::Commands
       model = "./lib/models/#{name}.rb"
       render_template("model.erb", model, class_name: class_name)
       display "created model file #{model}"
+    end
 
+    def create_model_migration
       migration = "./db/migrate/#{Time.now.to_i}_create_#{table_name}.rb"
       render_template("model_migration.erb", migration,
         table_name: table_name)
       display "created migration #{migration}"
+    end
 
+    def create_model_test
       test = "./test/models/#{name}_test.rb"
       render_template("model_test.erb", test, class_name: class_name)
       display "created test #{test}"
@@ -134,6 +155,10 @@ module Pliny::Commands
       write_file(destination_path) do
         template.result(context.instance_eval { binding })
       end
+    end
+
+    def url_path
+      "/" + name.pluralize.gsub(/_/, '-')
     end
 
     def write_file(destination_path)

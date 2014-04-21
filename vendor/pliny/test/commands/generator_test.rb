@@ -91,4 +91,11 @@ describe Pliny::Commands::Generator do
       end
     end
   end
+
+  describe "#url_path" do
+    it "builds a URL path" do
+      @gen.args = ["endpoint", "resource_history"]
+      assert_equal "/resource-histories", @gen.url_path
+    end
+  end
 end
