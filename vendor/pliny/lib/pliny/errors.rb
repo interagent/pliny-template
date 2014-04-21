@@ -2,16 +2,22 @@ module Pliny
   module Errors
     class Error < StandardError
       attr_accessor :id
+
+      def initialize(message, id)
+        @id = id
+        super(message)
+      end
     end
 
     class HTTPStatusError < Error
       attr_reader :status
 
-      def initialize(message = nil, id = nil)
+      def initialize(message = nil, id = nil, status = nil)
         meta    = Pliny::Errors::META[self.class]
-        @id     = id || meta[1].downcase.gsub(/ /, '_')
-        @status = meta[0]
-        super(message || meta[1] + ".")
+        message = message || meta[1] + "."
+        id      = id || meta[1].downcase.gsub(/ /, '_').to_sym
+        @status = status || meta[0]
+        super(message, id)
       end
     end
 
