@@ -64,11 +64,11 @@ module Pliny::Commands
       args[1]
     end
 
-    def model_class_name
+    def singular_class_name
       name.singularize.camelize
     end
 
-    def endpoint_class_name
+    def plural_class_name
       name.pluralize.camelize
     end
 
@@ -88,21 +88,21 @@ module Pliny::Commands
       endpoint = "./lib/endpoints/#{name.pluralize}.rb"
       template = options[:scaffold] ? "endpoint_scaffold.erb" : "endpoint.erb"
       render_template(template, endpoint, {
-        endpoint_class_name: endpoint_class_name,
-        model_class_name: model_class_name,
+        plural_class_name: plural_class_name,
+        singular_class_name: singular_class_name,
         field_name: field_name,
         url_path:   url_path,
       })
       display "created endpoint file #{endpoint}"
       display "add the following to lib/routes.rb:"
-      display "  use Endpoints::#{endpoint_class_name}"
+      display "  use Endpoints::#{plural_class_name}"
     end
 
     def create_endpoint_test
       test = "./test/endpoints/#{name.pluralize}_test.rb"
       render_template("endpoint_test.erb", test, {
-        endpoint_class_name: endpoint_class_name,
-        model_class_name: model_class_name,
+        plural_class_name: plural_class_name,
+        singular_class_name: singular_class_name,
         url_path:   url_path,
       })
       display "created test #{test}"
@@ -111,9 +111,9 @@ module Pliny::Commands
     def create_endpoint_acceptance_test
       test = "./test/acceptance/#{name.pluralize}_test.rb"
       render_template("endpoint_acceptance_test.erb", test, {
-        endpoint_class_name: endpoint_class_name,
+        plural_class_name: plural_class_name,
         field_name: field_name,
-        model_class_name: model_class_name,
+        singular_class_name: singular_class_name,
         url_path:   url_path,
       })
       display "created test #{test}"
@@ -121,13 +121,13 @@ module Pliny::Commands
 
     def create_mediator
       mediator = "./lib/mediators/#{name}.rb"
-      render_template("mediator.erb", mediator, endpoint_class_name: endpoint_class_name)
+      render_template("mediator.erb", mediator, plural_class_name: plural_class_name)
       display "created mediator file #{mediator}"
     end
 
     def create_mediator_test
       test = "./test/mediators/#{name}_test.rb"
-      render_template("mediator_test.erb", test, endpoint_class_name: endpoint_class_name)
+      render_template("mediator_test.erb", test, plural_class_name: plural_class_name)
       display "created test #{test}"
     end
 
@@ -139,7 +139,7 @@ module Pliny::Commands
 
     def create_model
       model = "./lib/models/#{name}.rb"
-      render_template("model.erb", model, model_class_name: model_class_name)
+      render_template("model.erb", model, singular_class_name: singular_class_name)
       display "created model file #{model}"
     end
 
@@ -152,7 +152,7 @@ module Pliny::Commands
 
     def create_model_test
       test = "./test/models/#{name}_test.rb"
-      render_template("model_test.erb", test, model_class_name: model_class_name)
+      render_template("model_test.erb", test, singular_class_name: singular_class_name)
       display "created test #{test}"
     end
 

@@ -1,5 +1,5 @@
 module Endpoints
-  class <%= endpoint_class_name %> < Base
+  class <%= plural_class_name %> < Base
     namespace "<%= url_path %>" do
       before do
         content_type :json

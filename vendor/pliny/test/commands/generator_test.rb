@@ -5,17 +5,17 @@ describe Pliny::Commands::Generator do
     @gen = Pliny::Commands::Generator.new({}, StringIO.new)
   end
 
-  describe "#endpoint_class_name" do
+  describe "#plural_class_name" do
     it "builds a class name for a model" do
       @gen.args = ["model", "resource_histories"]
-      assert_equal "ResourceHistories", @gen.endpoint_class_name
+      assert_equal "ResourceHistories", @gen.plural_class_name
     end
   end
 
-  describe "#model_class_name" do
+  describe "#singular_class_name" do
     it "builds a class name for an endpoint" do
       @gen.args = ["model", "resource_histories"]
-      assert_equal "ResourceHistory", @gen.model_class_name
+      assert_equal "ResourceHistory", @gen.singular_class_name
     end
   end
 

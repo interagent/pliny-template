@@ -1,35 +1,35 @@
 module Endpoints
-  class <%= endpoint_class_name %> < Base
+  class <%= plural_class_name %> < Base
     namespace "<%= url_path %>" do
       before do
         content_type :json
       end
 
       get do
-        MultiJson.encode <%= model_class_name %>.all.map { |x| serialize(x) }
+        MultiJson.encode <%= singular_class_name %>.all.map { |x| serialize(x) }
       end
 
       post do
         # warning: not safe
-        <%= field_name %> = <%= model_class_name %>.new(params)
+        <%= field_name %> = <%= singular_class_name %>.new(params)
         <%= field_name %>.save
         status 201
         MultiJson.encode serialize(<%= field_name %>)
       end
 
       get "/:id" do |id|
-        <%= field_name %> = <%= model_class_name %>.first(uuid: id) || halt(404)
+        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
         MultiJson.encode serialize(<%= field_name %>)
       end
 
       delete "/:id" do |id|
-        <%= field_name %> = <%= model_class_name %>.first(uuid: id) || halt(404)
+        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
         <%= field_name %>.destroy
         MultiJson.encode serialize(<%= field_name %>)
       end
 
       patch "/:id" do |id|
-        <%= field_name %> = <%= model_class_name %>.first(uuid: id) || halt(404)
+        <%= field_name %> = <%= singular_class_name %>.first(uuid: id) || halt(404)
         # warning: not safe
         <%= field_name %>.update(params)
         MultiJson.encode serialize(<%= field_name %>)

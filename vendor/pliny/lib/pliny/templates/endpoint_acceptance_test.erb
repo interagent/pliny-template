@@ -1,6 +1,6 @@
 require "test_helper"
 
-describe Endpoints::<%= endpoint_class_name %> do
+describe Endpoints::<%= plural_class_name %> do
   include Committee::Test::Methods
   include Rack::Test::Methods
 
@@ -13,7 +13,7 @@ describe Endpoints::<%= endpoint_class_name %> do
   end
 
   before do
-    @<%= field_name %> = <%= model_class_name %>.create
+    @<%= field_name %> = <%= singular_class_name %>.create
 
     # temporarily touch #updated_at until we can fix prmd
     @<%= field_name %>.updated_at
