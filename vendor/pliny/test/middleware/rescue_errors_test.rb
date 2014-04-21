@@ -6,7 +6,7 @@ describe Pliny::Middleware::RescueErrors do
   class BadMiddleware
     def call(env)
       if env["PATH_INFO"] == "/api-error"
-        raise Pliny::Error::ServiceUnavailable
+        raise Pliny::Errors::ServiceUnavailable
       else
         raise "Omg!"
       end
