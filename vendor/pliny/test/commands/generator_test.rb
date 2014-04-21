@@ -79,5 +79,16 @@ describe Pliny::Commands::Generator do
         assert File.exists?("test/models/artist_test.rb")
       end
     end
+
+    describe "generating schemas" do
+      before do
+        @gen.args = ["schema", "artist"]
+        @gen.run!
+      end
+
+      it "creates a schema" do
+        assert File.exists?("docs/schema/schemata/artist.json")
+      end
+    end
   end
 end

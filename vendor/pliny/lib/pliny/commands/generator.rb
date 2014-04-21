@@ -2,6 +2,7 @@ require "erb"
 require "fileutils"
 require "ostruct"
 require "active_support/inflector"
+require "prmd"
 
 module Pliny::Commands
   class Generator
@@ -33,6 +34,8 @@ module Pliny::Commands
         create_migration
       when "model"
         create_model
+      when "schema"
+        create_schema
       else
         abort("Don't know how to generate '#{type}'.")
       end
@@ -116,13 +119,27 @@ module Pliny::Commands
       display "created test #{test}"
     end
 
+    def create_schema
+      schema = "./docs/schema/schemata/#{name}.json"
+      write_file(schema) do
+        Prmd.init(name)
+      end
+      display "created schema file #{schema}"
+    end
+
     def render_template(template_file, destination_path, vars={})
       template_path = File.dirname(__FILE__) + "/../templates/#{template_file}"
       template = ERB.new(File.read(template_path))
+      context = OpenStruct.new(vars)
+      write_file(destination_path) do
+        template.result(context.instance_eval { binding })
+      end
+    end
+
+    def write_file(destination_path)
       FileUtils.mkdir_p(File.dirname(destination_path))
       File.open(destination_path, "w") do |f|
-        context = OpenStruct.new(vars)
-        f.puts template.result(context.instance_eval { binding })
+        f.puts yield
       end
     end
   end
