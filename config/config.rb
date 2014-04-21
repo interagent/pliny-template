@@ -23,6 +23,7 @@ module Config
 
   # Override -- value is returned or the set default. Remember to typecast.
   override \
+    db_pool:          5,
     port:             5000,
     puma_max_threads: 16,
     puma_min_threads: 1,
