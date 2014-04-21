@@ -6,6 +6,7 @@ PATH
       http_accept
       multi_json
       pg
+      prmd
       sequel
       sinatra
       sinatra-router
@@ -26,7 +27,7 @@ GEM
     http_accept (0.1.5)
     i18n (0.6.9)
     json (1.8.1)
-    minitest (5.3.2)
+    minitest (5.3.3)
     multi_json (1.9.2)
     oj (2.6.1)
     pg (0.17.1)
@@ -71,7 +72,6 @@ DEPENDENCIES
   oj
   pg
   pliny!
-  prmd
   puma
   rack-test
   rr
