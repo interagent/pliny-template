@@ -21,6 +21,10 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     backports (2.6.5)
+    committee (0.4.4)
+      multi_json (> 0.0)
+      rack (> 0.0)
+    database_cleaner (1.2.0)
     erubis (2.7.0)
     honeybadger (1.11.2)
       json
@@ -67,6 +71,8 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  committee
+  database_cleaner
   honeybadger
   multi_json
   oj

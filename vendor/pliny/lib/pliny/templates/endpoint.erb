@@ -1,23 +1,23 @@
 module Endpoints
-  class <%= class_name %> < Base
+  class <%= endpoint_class_name %> < Base
     namespace "<%= url_path %>" do
-      get do
+      before do
         content_type :json
+      end
+
+      get do
         "[]"
       end
 
+      post do
+        "{}"
+      end
+
       delete "/:id" do |id|
-        content_type :json
         "{}"
       end
 
       patch "/:id" do |id|
-        content_type :json
-        "{}"
-      end
-
-      post do
-        content_type :json
         "{}"
       end
     end

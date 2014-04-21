@@ -27,7 +27,7 @@ module Pliny::Commands
 
       case type
       when "endpoint"
-        create_endpoint
+        create_endpoint(scaffold: false)
         create_endpoint_test
         create_endpoint_acceptance_test
       when "mediator"
@@ -40,15 +40,17 @@ module Pliny::Commands
         create_model_migration
         create_model_test
       when "scaffold"
-        create_endpoint
+        create_endpoint(scaffold: true)
         create_endpoint_test
         create_endpoint_acceptance_test
         create_model
         create_model_migration
         create_model_test
         create_schema
+        rebuild_schema
       when "schema"
         create_schema
+        rebuild_schema
       else
         abort("Don't know how to generate '#{type}'.")
       end
@@ -62,8 +64,16 @@ module Pliny::Commands
       args[1]
     end
 
-    def class_name
+    def model_class_name
       name.singularize.camelize
+    end
+
+    def endpoint_class_name
+      name.pluralize.camelize
+    end
+
+    def field_name
+      name.tableize.singularize
     end
 
     def table_name
@@ -74,30 +84,36 @@ module Pliny::Commands
       stream.puts msg
     end
 
-    def create_endpoint
-      endpoint = "./lib/endpoints/#{name.singularize}.rb"
-      render_template("endpoint.erb", endpoint, {
-        class_name: class_name,
+    def create_endpoint(options = {})
+      endpoint = "./lib/endpoints/#{name.pluralize}.rb"
+      template = options[:scaffold] ? "endpoint_scaffold.erb" : "endpoint.erb"
+      render_template(template, endpoint, {
+        endpoint_class_name: endpoint_class_name,
+        model_class_name: model_class_name,
+        field_name: field_name,
         url_path:   url_path,
       })
       display "created endpoint file #{endpoint}"
       display "add the following to lib/routes.rb:"
-      display "  use Endpoints::#{class_name}"
+      display "  use Endpoints::#{endpoint_class_name}"
     end
 
     def create_endpoint_test
-      test = "./test/endpoints/#{name}_test.rb"
+      test = "./test/endpoints/#{name.pluralize}_test.rb"
       render_template("endpoint_test.erb", test, {
-        class_name: class_name,
+        endpoint_class_name: endpoint_class_name,
+        model_class_name: model_class_name,
         url_path:   url_path,
       })
       display "created test #{test}"
     end
 
     def create_endpoint_acceptance_test
-      test = "./test/acceptance/#{name.singularize}_test.rb"
+      test = "./test/acceptance/#{name.pluralize}_test.rb"
       render_template("endpoint_acceptance_test.erb", test, {
-        class_name: class_name,
+        endpoint_class_name: endpoint_class_name,
+        field_name: field_name,
+        model_class_name: model_class_name,
         url_path:   url_path,
       })
       display "created test #{test}"
@@ -123,7 +139,7 @@ module Pliny::Commands
 
     def create_model
       model = "./lib/models/#{name}.rb"
-      render_template("model.erb", model, class_name: class_name)
+      render_template("model.erb", model, model_class_name: model_class_name)
       display "created model file #{model}"
     end
 
@@ -136,16 +152,24 @@ module Pliny::Commands
 
     def create_model_test
       test = "./test/models/#{name}_test.rb"
-      render_template("model_test.erb", test, class_name: class_name)
+      render_template("model_test.erb", test, model_class_name: model_class_name)
       display "created test #{test}"
     end
 
     def create_schema
-      schema = "./docs/schema/schemata/#{name.pluralize}.json"
+      schema = "./docs/schema/schemata/#{name.singularize}.json"
       write_file(schema) do
-        Prmd.init(name)
+        Prmd.init(name.singularize)
       end
       display "created schema file #{schema}"
+    end
+
+    def rebuild_schema
+      schemata = "./docs/schema.json"
+      write_file(schemata) do
+        Prmd.combine("./docs/schema/schemata", meta: "./docs/schema/meta.json")
+      end
+      display "rebuilt #{schemata}"
     end
 
     def render_template(template_file, destination_path, vars={})
