@@ -47,7 +47,7 @@ module Pliny::Commands
     end
 
     def class_name
-      name.camelize
+      name.singularize.camelize
     end
 
     def table_name
@@ -61,7 +61,7 @@ module Pliny::Commands
     def create_endpoint
       url_path   = "/" + name.gsub(/_/, '-')
 
-      endpoint = "./lib/endpoints/#{name}.rb"
+      endpoint = "./lib/endpoints/#{name.singularize}.rb"
       render_template("endpoint.erb", endpoint, {
         class_name: class_name,
         url_path:   url_path,
@@ -77,7 +77,7 @@ module Pliny::Commands
       })
       display "created test #{test}"
 
-      test = "./test/acceptance/#{name}_test.rb"
+      test = "./test/acceptance/#{name.singularize}_test.rb"
       render_template("endpoint_acceptance_test.erb", test, {
         class_name: class_name,
         url_path:   url_path,

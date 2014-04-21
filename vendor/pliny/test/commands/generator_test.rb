@@ -7,7 +7,7 @@ describe Pliny::Commands::Generator do
 
   describe "#class_name" do
     it "builds a class name" do
-      @gen.args = ["model", "resource_history"]
+      @gen.args = ["model", "resource_histories"]
       assert_equal "ResourceHistory", @gen.class_name
     end
   end
@@ -63,7 +63,7 @@ describe Pliny::Commands::Generator do
 
     describe "generating models" do
       before do
-        @gen.args = ["model", "artist"]
+        @gen.args = ["model", "artists"]
         @gen.run!
       end
 
