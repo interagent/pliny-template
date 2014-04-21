@@ -44,6 +44,10 @@ describe Pliny::Commands::Generator do
       it "creates an endpoint test" do
         assert File.exists?("test/endpoints/artists_test.rb")
       end
+
+      it "creates an endpoint acceptance test" do
+        assert File.exists?("test/acceptance/artists_test.rb")
+      end
     end
 
     describe "generating mediators" do
@@ -77,6 +81,41 @@ describe Pliny::Commands::Generator do
 
       it "creates a test" do
         assert File.exists?("test/models/artist_test.rb")
+      end
+    end
+
+    describe "generating scaffolds" do
+      before do
+        @gen.args = ["scaffold", "artist"]
+        @gen.run!
+      end
+
+      it "creates a new endpoint module" do
+        assert File.exists?("lib/endpoints/artists.rb")
+      end
+
+      it "creates an endpoint test" do
+        assert File.exists?("test/endpoints/artists_test.rb")
+      end
+
+      it "creates an endpoint acceptance test" do
+        assert File.exists?("test/acceptance/artists_test.rb")
+      end
+
+      it "creates a migration" do
+        assert File.exists?("db/migrate/#{@t.to_i}_create_artists.rb")
+      end
+
+      it "creates the actual model" do
+        assert File.exists?("lib/models/artist.rb")
+      end
+
+      it "creates a test" do
+        assert File.exists?("test/models/artist_test.rb")
+      end
+
+      it "creates a schema" do
+        assert File.exists?("docs/schema/schemata/artists.json")
       end
     end
 
