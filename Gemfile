@@ -1,8 +1,6 @@
 source "https://rubygems.org"
 ruby "2.1.0"
 
-gem "committee"
-gem "database_cleaner"
 gem "honeybadger"
 gem "multi_json"
 gem "oj"
@@ -16,6 +14,8 @@ gem "sinatra-contrib", require: ["sinatra/namespace", "sinatra/reloader"]
 gem "sinatra-router"
 
 group :test do
+  gem "committee"
+  gem "database_cleaner"
   gem "rack-test"
   gem "rr", require: false
 end
