@@ -29,7 +29,7 @@ module Pliny::Commands
       when "endpoint"
         create_endpoint(scaffold: false)
         create_endpoint_test
-        create_endpoint_acceptance_test
+        create_endpoint_acceptance_test(scaffold: false)
       when "mediator"
         create_mediator
         create_mediator_test
@@ -42,7 +42,7 @@ module Pliny::Commands
       when "scaffold"
         create_endpoint(scaffold: true)
         create_endpoint_test
-        create_endpoint_acceptance_test
+        create_endpoint_acceptance_test(scaffold: true)
         create_model
         create_model_migration
         create_model_test
@@ -108,9 +108,11 @@ module Pliny::Commands
       display "created test #{test}"
     end
 
-    def create_endpoint_acceptance_test
+    def create_endpoint_acceptance_test(options = {})
       test = "./test/acceptance/#{name.pluralize}_test.rb"
-      render_template("endpoint_acceptance_test.erb", test, {
+      template = options[:scaffold] ? "endpoint_scaffold_acceptance_test.erb" :
+        "endpoint_acceptance_test.erb"
+      render_template(template, test, {
         plural_class_name: plural_class_name,
         field_name: field_name,
         singular_class_name: singular_class_name,

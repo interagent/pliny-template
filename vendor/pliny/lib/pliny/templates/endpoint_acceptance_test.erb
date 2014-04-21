@@ -8,27 +8,33 @@ describe Endpoints::<%= plural_class_name %> do
     Routes
   end
 
-  def schema_path
-    App.root + "/docs/schema.json"
-  end
-
-  before do
-    @<%= field_name %> = <%= singular_class_name %>.create
-
-    # temporarily touch #updated_at until we can fix prmd
-    @<%= field_name %>.updated_at
-    @<%= field_name %>.save
-  end
-
   it "GET <%= url_path %>" do
     get "<%= url_path %>"
     assert_equal 200, last_response.status
-    assert_schema_conform
+    assert_equal "[]", last_response.body
+  end
+
+  it "POST <%= url_path %>/:id" do
+    post "<%= url_path %>"
+    assert_equal 201, last_response.status
+    assert_equal "{}", last_response.body
   end
 
   it "GET <%= url_path %>/:id" do
-    get "<%= url_path %>/#{@<%= field_name %>.uuid}"
+    get "<%= url_path %>/123"
     assert_equal 200, last_response.status
-    assert_schema_conform
+    assert_equal "{}", last_response.body
+  end
+
+  it "PATCH <%= url_path %>/:id" do
+    patch "<%= url_path %>/123"
+    assert_equal 200, last_response.status
+    assert_equal "{}", last_response.body
+  end
+
+  it "DELETE <%= url_path %>/:id" do
+    delete "<%= url_path %>/123"
+    assert_equal 200, last_response.status
+    assert_equal "{}", last_response.body
   end
 end

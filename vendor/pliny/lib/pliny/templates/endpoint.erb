@@ -10,14 +10,19 @@ module Endpoints
       end
 
       post do
+        status 201
         "{}"
       end
 
-      delete "/:id" do |id|
+      get "/:id" do
         "{}"
       end
 
       patch "/:id" do |id|
+        "{}"
+      end
+
+      delete "/:id" do |id|
         "{}"
       end
     end
