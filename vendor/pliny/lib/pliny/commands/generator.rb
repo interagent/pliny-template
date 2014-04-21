@@ -121,13 +121,13 @@ module Pliny::Commands
 
     def create_mediator
       mediator = "./lib/mediators/#{name}.rb"
-      render_template("mediator.erb", mediator, class_name: class_name)
+      render_template("mediator.erb", mediator, endpoint_class_name: endpoint_class_name)
       display "created mediator file #{mediator}"
     end
 
     def create_mediator_test
       test = "./test/mediators/#{name}_test.rb"
-      render_template("mediator_test.erb", test, class_name: class_name)
+      render_template("mediator_test.erb", test, endpoint_class_name: endpoint_class_name)
       display "created test #{test}"
     end
 
