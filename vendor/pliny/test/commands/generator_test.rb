@@ -87,7 +87,7 @@ describe Pliny::Commands::Generator do
       end
 
       it "creates a schema" do
-        assert File.exists?("docs/schema/schemata/artist.json")
+        assert File.exists?("docs/schema/schemata/artists.json")
       end
     end
   end

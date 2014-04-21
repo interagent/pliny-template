@@ -120,7 +120,7 @@ module Pliny::Commands
     end
 
     def create_schema
-      schema = "./docs/schema/schemata/#{name}.json"
+      schema = "./docs/schema/schemata/#{name.pluralize}.json"
       write_file(schema) do
         Prmd.init(name)
       end
