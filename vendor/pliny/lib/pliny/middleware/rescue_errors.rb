@@ -6,11 +6,11 @@ module Pliny::Middleware
 
     def call(env)
       @app.call(env)
-    rescue Pliny::Error::Base => e
+    rescue Pliny::Errors::Error => e
       render(e, env)
     rescue Exception => e
     # Pliny.log_exception(e)
-      render(Pliny::Error::InternalServerError.new, env)
+      render(Pliny::Errors::InternalServerError.new, env)
     end
 
     private

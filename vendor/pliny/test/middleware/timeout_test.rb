@@ -25,7 +25,7 @@ describe Pliny::Middleware::Timeout do
   end
 
   it "responds with an error on a timeout" do
-    assert_raises(Pliny::Error::ServiceUnavailable) do
+    assert_raises(Pliny::Errors::ServiceUnavailable) do
       get "/timeout"
     end
   end

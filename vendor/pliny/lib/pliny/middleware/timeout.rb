@@ -1,7 +1,7 @@
 require "timeout"
 
 module Pliny::Middleware
-  # Requires that Pliny::Error::RescueErrors is nested above it.
+  # Requires that Pliny::Middleware::RescueErrors is nested above it.
   class Timeout
     def initialize(app, options={})
       @app = app
@@ -14,7 +14,7 @@ module Pliny::Middleware
       end
     rescue RequestTimeout
     # Pliny::Sample.measure "requests.timeouts"
-      raise Pliny::Error::ServiceUnavailable, "Timeout reached."
+      raise Pliny::Errors::ServiceUnavailable, "Timeout reached."
     end
 
     # use a custom Timeout class so it can't be rescued accidentally by
