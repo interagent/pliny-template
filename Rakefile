@@ -1,3 +1,4 @@
+require "bundler/setup"
 require "pliny/tasks"
 
 # Add your rake tasks to lib/tasks!
