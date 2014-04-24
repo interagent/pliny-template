@@ -5,10 +5,17 @@ describe Pliny::Commands::Generator do
     @gen = Pliny::Commands::Generator.new({}, StringIO.new)
   end
 
-  describe "#class_name" do
-    it "builds a class name" do
+  describe "#plural_class_name" do
+    it "builds a class name for a model" do
       @gen.args = ["model", "resource_histories"]
-      assert_equal "ResourceHistory", @gen.class_name
+      assert_equal "ResourceHistories", @gen.plural_class_name
+    end
+  end
+
+  describe "#singular_class_name" do
+    it "builds a class name for an endpoint" do
+      @gen.args = ["model", "resource_histories"]
+      assert_equal "ResourceHistory", @gen.singular_class_name
     end
   end
 
@@ -43,6 +50,10 @@ describe Pliny::Commands::Generator do
 
       it "creates an endpoint test" do
         assert File.exists?("test/endpoints/artists_test.rb")
+      end
+
+      it "creates an endpoint acceptance test" do
+        assert File.exists?("test/acceptance/artists_test.rb")
       end
     end
 
@@ -80,6 +91,41 @@ describe Pliny::Commands::Generator do
       end
     end
 
+    describe "generating scaffolds" do
+      before do
+        @gen.args = ["scaffold", "artist"]
+        @gen.run!
+      end
+
+      it "creates a new endpoint module" do
+        assert File.exists?("lib/endpoints/artists.rb")
+      end
+
+      it "creates an endpoint test" do
+        assert File.exists?("test/endpoints/artists_test.rb")
+      end
+
+      it "creates an endpoint acceptance test" do
+        assert File.exists?("test/acceptance/artists_test.rb")
+      end
+
+      it "creates a migration" do
+        assert File.exists?("db/migrate/#{@t.to_i}_create_artists.rb")
+      end
+
+      it "creates the actual model" do
+        assert File.exists?("lib/models/artist.rb")
+      end
+
+      it "creates a test" do
+        assert File.exists?("test/models/artist_test.rb")
+      end
+
+      it "creates a schema" do
+        assert File.exists?("docs/schema/schemata/artists.json")
+      end
+    end
+
     describe "generating schemas" do
       before do
         @gen.args = ["schema", "artist"]
@@ -89,6 +135,13 @@ describe Pliny::Commands::Generator do
       it "creates a schema" do
         assert File.exists?("docs/schema/schemata/artists.json")
       end
+    end
+  end
+
+  describe "#url_path" do
+    it "builds a URL path" do
+      @gen.args = ["endpoint", "resource_history"]
+      assert_equal "/resource-histories", @gen.url_path
     end
   end
 end

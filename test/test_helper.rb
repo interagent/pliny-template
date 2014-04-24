@@ -9,8 +9,16 @@ require "rr"
 
 require_relative "../lib/app"
 
+DatabaseCleaner.strategy = :transaction
+
 class MiniTest::Spec
-  include Rack::Test::Methods
+  before :each do
+    DatabaseCleaner.start
+  end
+
+  after :each do
+    DatabaseCleaner.clean
+  end
 end
 
 ENV.update(Pliny::Utils.parse_env("#{App.root}/.env.test"))
