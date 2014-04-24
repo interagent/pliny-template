@@ -24,7 +24,7 @@ end
 ENV.update(Pliny::Utils.parse_env("#{App.root}/.env.test"))
 
 App.initialize!
-App.require!(['lib/models'])
+App.require!(['lib/models/**/*'])
 
 # pull in test initializers
 Pliny::Utils.require_glob("#{App.root}/test/support/**/*.rb")
