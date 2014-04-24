@@ -67,6 +67,12 @@ createdb pliny-test
 rake
 ```
 
+Or to run a single test suite:
+
+```bash
+ruby -Itest test/acceptance/artists_test.rb
+```
+
 ## Meta
 
 Created by Brandur Leach and Pedro Belo.
