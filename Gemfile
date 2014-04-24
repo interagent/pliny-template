@@ -13,6 +13,10 @@ gem "sinatra", require: "sinatra/base"
 gem "sinatra-contrib", require: ["sinatra/namespace", "sinatra/reloader"]
 gem "sinatra-router"
 
+group :development do
+  gem "foreman"
+end
+
 group :test do
   gem "committee"
   gem "database_cleaner"
