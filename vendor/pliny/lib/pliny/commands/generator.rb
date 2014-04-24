@@ -99,7 +99,7 @@ module Pliny::Commands
     end
 
     def create_endpoint_test
-      test = "./test/endpoints/#{name.pluralize}_test.rb"
+      test = "./spec/endpoints/#{name.pluralize}_spec.rb"
       render_template("endpoint_test.erb", test, {
         plural_class_name: plural_class_name,
         singular_class_name: singular_class_name,
@@ -109,7 +109,7 @@ module Pliny::Commands
     end
 
     def create_endpoint_acceptance_test(options = {})
-      test = "./test/acceptance/#{name.pluralize}_test.rb"
+      test = "./spec/acceptance/#{name.pluralize}_spec.rb"
       template = options[:scaffold] ? "endpoint_scaffold_acceptance_test.erb" :
         "endpoint_acceptance_test.erb"
       render_template(template, test, {
@@ -128,7 +128,7 @@ module Pliny::Commands
     end
 
     def create_mediator_test
-      test = "./test/mediators/#{name}_test.rb"
+      test = "./spec/mediators/#{name}_spec.rb"
       render_template("mediator_test.erb", test, plural_class_name: plural_class_name)
       display "created test #{test}"
     end
@@ -153,7 +153,7 @@ module Pliny::Commands
     end
 
     def create_model_test
-      test = "./test/models/#{name}_test.rb"
+      test = "./spec/models/#{name}_spec.rb"
       render_template("model_test.erb", test, singular_class_name: singular_class_name)
       display "created test #{test}"
     end

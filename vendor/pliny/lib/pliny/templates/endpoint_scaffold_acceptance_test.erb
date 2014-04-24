@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe Endpoints::<%= plural_class_name %> do
   include Committee::Test::Methods
@@ -22,34 +22,34 @@ describe Endpoints::<%= plural_class_name %> do
 
   it "GET <%= url_path %>" do
     get "<%= url_path %>"
-    assert_equal 200, last_response.status
+    last_response.status.should eq(200)
     assert_schema_conform
   end
 
 =begin
   it "POST <%= url_path %>" do
     post "<%= url_path %>", MultiJson.encode({})
-    assert_equal 201, last_response.status
+    last_response.status.should eq(201)
     assert_schema_conform
   end
 =end
 
   it "GET <%= url_path %>/:id" do
     get "<%= url_path %>/#{@<%= field_name %>.uuid}"
-    assert_equal 200, last_response.status
+    last_response.status.should eq(201)
     assert_schema_conform
   end
 
   it "PATCH <%= url_path %>/:id" do
     header "Content-Type", "application/json"
     patch "<%= url_path %>/#{@<%= field_name %>.uuid}", MultiJson.encode({})
-    assert_equal 200, last_response.status
+    last_response.status.should eq(201)
     assert_schema_conform
   end
 
   it "GET <%= url_path %>/:id" do
     delete "<%= url_path %>/#{@<%= field_name %>.uuid}"
-    assert_equal 200, last_response.status
+    last_response.status.should eq(201)
     assert_schema_conform
   end
 end
