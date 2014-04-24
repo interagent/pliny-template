@@ -1,6 +1,0 @@
-#!/usr/bin/env ruby
-
-require "bundler"
-Bundler.require
-
-Pliny::Commands::Migrator.run(ARGV.dup)
