@@ -2,28 +2,37 @@ require "uri"
 require "sequel"
 require "sequel/extensions/migration"
 
+require_relative "../../vendor/pliny/lib/pliny/utils"
+
 namespace :db do
   desc "Run database migrations"
   task :migrate, :env do |cmd, args|
     next if Dir["./db/migrate/*.rb"].empty?
-    Sequel.connect(ENV["DATABASE_URL"])
-    Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate")
+    envs.each do |env_file, env|
+      db = Sequel.connect(env["DATABASE_URL"])
+      p env["DATABASE_URL"]
+      Sequel::Migrator.apply(db, "./db/migrate")
+    end
     puts "Migrated to the latest"
   end
 
   desc "Rollback the database"
   task :rollback, :env do |cmd, args|
     next if Dir["./db/migrate/*.rb"].empty?
-    Sequel.connect(ENV["DATABASE_URL"])
-    Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate", -1)
+    envs.each do |env_file, env|
+      db = Sequel.connect(env["DATABASE_URL"])
+      Sequel::Migrator.apply(db, "./db/migrate", -1)
+    end
     puts "Rolled back."
   end
 
   desc "Nuke the database (drop all tables)"
   task :nuke, :env do |cmd, args|
-    Sequel.connect(ENV["DATABASE_URL"])
-    Sequel::Model.db.tables.each do |table|
-      Sequel::Model.db.run(%{DROP TABLE "#{table}"})
+    envs.each do |env_file, env|
+      db = Sequel.connect(env["DATABASE_URL"])
+      db.tables.each do |table|
+        db.run(%{DROP TABLE "#{table}"})
+      end
     end
     puts "Nuked database"
   end
@@ -33,38 +42,60 @@ namespace :db do
 
   desc "Create the database"
   task :create, :env do |cmd, args|
-    uri = URI.join(ENV["DATABASE_URL"], "/").to_s
-    db = Sequel.connect(uri)
-    name = URI.parse(ENV["DATABASE_URL"]).path[1..-1]
-    db.run(%{CREATE DATABASE "#{name}"})
+    db = Sequel.connect("postgres://localhost/postgres")
+    envs.each do |env_file, env|
+      begin
+        name = URI.parse(env["DATABASE_URL"]).path[1..-1]
+        db.run(%{CREATE DATABASE "#{name}"})
+      rescue Sequel::DatabaseError
+        raise unless $!.message =~ /already exists/
+      end
+    end
     puts "Database created"
   end
 
   desc "Drop the database"
   task :drop, :env do |cmd, args|
-    uri = URI.join(ENV["DATABASE_URL"], "/").to_s
-    db = Sequel.connect(uri)
-    name = URI.parse(ENV["DATABASE_URL"]).path[1..-1]
-    db.run(%{DROP DATABASE IF EXISTS "#{name}"})
+    db = Sequel.connect("postgres://localhost/postgres")
+    envs.each do |env_file, env|
+      name = URI.parse(env["DATABASE_URL"]).path[1..-1]
+      db.run(%{DROP DATABASE IF EXISTS "#{name}"})
+    end
     puts "Database dropped"
   end
 
   namespace :schema do
     desc "Load the database schema"
     task :load, :env do |cmd, args|
-      db = Sequel.connect(ENV["DATABASE_URL"])
       schema = File.read("./db/schema.sql")
-      db.run(schema)
+      envs.each do |env_file, env|
+        db = Sequel.connect(env["DATABASE_URL"])
+        db.run(schema)
+      end
       puts "Loaded schema"
     end
 
     desc "Dump the database schema"
     task :dump, :env do |cmd, args|
-      `pg_dump -i -s -x -O -f ./db/schema.sql #{ENV["DATABASE_URL"]}`
+      env_file, env = envs.first
+      `pg_dump -i -s -x -O -f ./db/schema.sql #{env["DATABASE_URL"]}`
       puts "Dumped schema"
     end
   end
 
   desc "Setup the database"
   task :setup, [:env] => [:drop, :create]
+
+  private
+
+  def envs
+    %w(.env .env.test).map { |env_file|
+      env_path = "./#{env_file}"
+      if File.exists?(env_path)
+        [env_file, Pliny::Utils.parse_env(env_path)]
+      else
+        nil
+      end
+    }.compact
+  end
 end

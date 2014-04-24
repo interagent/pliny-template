@@ -5,4 +5,4 @@ hash foreman 2>/dev/null || {
   exit 1;
 }
 
-cp .env.sample .env && bundle install && foreman run rake db:setup db:schema:load
+cp .env.sample .env && bundle install && rake db:setup db:schema:load db:migrate
