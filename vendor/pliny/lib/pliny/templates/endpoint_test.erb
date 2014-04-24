@@ -1,8 +1,10 @@
 require "test_helper"
 
-describe Endpoints::<%= class_name %> do
+describe Endpoints::<%= plural_class_name %> do
+  include Rack::Test::Methods
+
   def app
-    Endpoints::<%= class_name %>
+    Endpoints::<%= plural_class_name %>
   end
 
   describe "GET <%= url_path %>" do
