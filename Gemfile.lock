@@ -6,6 +6,7 @@ PATH
       http_accept
       multi_json
       pg
+      prmd
       sequel
       sinatra
       sinatra-router
@@ -20,6 +21,7 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
     backports (2.6.5)
+    erubis (2.7.0)
     honeybadger (1.11.2)
       json
     http_accept (0.1.5)
@@ -29,6 +31,8 @@ GEM
     multi_json (1.9.2)
     oj (2.6.1)
     pg (0.17.1)
+    prmd (0.1.1)
+      erubis (~> 2.7)
     puma (2.7.1)
       rack (>= 1.1, < 2.0)
     rack (1.5.2)
