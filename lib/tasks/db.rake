@@ -80,7 +80,13 @@ namespace :db do
     task :dump do
       env_file, env = envs.first
       `pg_dump -i -s -x -O -f ./db/schema.sql #{env["DATABASE_URL"]}`
-      puts "Dumped `#{name_from_uri(env["DATABASE_URL"])}`"
+      puts "Dumped `#{name_from_uri(env["DATABASE_URL"])}` to db/schema.sql"
+    end
+
+    desc "Merges migrations into schema and removes them"
+    task :merge => ["db:setup", "db:schema:load", "db:migrate", "db:schema:dump"] do
+      FileUtils.rm Dir["./db/migrate/*.rb"]
+      puts "Removed migrations"
     end
   end
 

@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-hash foreman 2>/dev/null || {
-  echo >&2 "Could not find `foreman` executable. Please install it.";
-  exit 1;
-}
-
-foreman run rake db:setup db:schema:load && foreman run rake db:migrate db:schema:dump && rm -f ./db/migrate/*.rb
