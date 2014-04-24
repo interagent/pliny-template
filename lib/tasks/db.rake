@@ -11,8 +11,8 @@ namespace :db do
     envs.each do |env_file, env|
       db = Sequel.connect(env["DATABASE_URL"])
       Sequel::Migrator.apply(db, "./db/migrate")
+      puts "Migrated `#{name_from_uri(env["DATABASE_URL"])}`"
     end
-    puts "Migrated to the latest"
   end
 
   desc "Rollback the database"
@@ -21,8 +21,8 @@ namespace :db do
     envs.each do |env_file, env|
       db = Sequel.connect(env["DATABASE_URL"])
       Sequel::Migrator.apply(db, "./db/migrate", -1)
+      puts "Rolled back `#{name_from_uri(env["DATABASE_URL"])}`"
     end
-    puts "Rolled back."
   end
 
   desc "Nuke the database (drop all tables)"
@@ -32,8 +32,8 @@ namespace :db do
       db.tables.each do |table|
         db.run(%{DROP TABLE "#{table}"})
       end
+      puts "Nuked `#{name_from_uri(env["DATABASE_URL"])}`"
     end
-    puts "Nuked database"
   end
 
   desc "Reset the database"
@@ -43,24 +43,26 @@ namespace :db do
   task :create do
     db = Sequel.connect("postgres://localhost/postgres")
     envs.each do |env_file, env|
+      exists = false
+      name = name_from_uri(env["DATABASE_URL"])
       begin
-        name = URI.parse(env["DATABASE_URL"]).path[1..-1]
         db.run(%{CREATE DATABASE "#{name}"})
       rescue Sequel::DatabaseError
         raise unless $!.message =~ /already exists/
+        exists = true
       end
+      puts "Created `#{name}`" if !exists
     end
-    puts "Database created"
   end
 
   desc "Drop the database"
   task :drop do
     db = Sequel.connect("postgres://localhost/postgres")
     envs.each do |env_file, env|
-      name = URI.parse(env["DATABASE_URL"]).path[1..-1]
+      name = name_from_uri(env["DATABASE_URL"])
       db.run(%{DROP DATABASE IF EXISTS "#{name}"})
+      puts "Dropped `#{name}`"
     end
-    puts "Database dropped"
   end
 
   namespace :schema do
@@ -70,15 +72,15 @@ namespace :db do
       envs.each do |env_file, env|
         db = Sequel.connect(env["DATABASE_URL"])
         db.run(schema)
+        puts "Loaded `#{name_from_uri(env["DATABASE_URL"])}`"
       end
-      puts "Loaded schema"
     end
 
     desc "Dump the database schema"
     task :dump do
       env_file, env = envs.first
       `pg_dump -i -s -x -O -f ./db/schema.sql #{env["DATABASE_URL"]}`
-      puts "Dumped schema"
+      puts "Dumped `#{name_from_uri(env["DATABASE_URL"])}`"
     end
   end
 
@@ -96,5 +98,9 @@ namespace :db do
         nil
       end
     }.compact
+  end
+
+  def name_from_uri(uri)
+    URI.parse(uri).path[1..-1]
   end
 end
