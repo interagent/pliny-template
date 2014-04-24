@@ -6,18 +6,17 @@ require_relative "../../vendor/pliny/lib/pliny/utils"
 
 namespace :db do
   desc "Run database migrations"
-  task :migrate, :env do |cmd, args|
+  task :migrate do
     next if Dir["./db/migrate/*.rb"].empty?
     envs.each do |env_file, env|
       db = Sequel.connect(env["DATABASE_URL"])
-      p env["DATABASE_URL"]
       Sequel::Migrator.apply(db, "./db/migrate")
     end
     puts "Migrated to the latest"
   end
 
   desc "Rollback the database"
-  task :rollback, :env do |cmd, args|
+  task :rollback do
     next if Dir["./db/migrate/*.rb"].empty?
     envs.each do |env_file, env|
       db = Sequel.connect(env["DATABASE_URL"])
@@ -27,7 +26,7 @@ namespace :db do
   end
 
   desc "Nuke the database (drop all tables)"
-  task :nuke, :env do |cmd, args|
+  task :nuke do
     envs.each do |env_file, env|
       db = Sequel.connect(env["DATABASE_URL"])
       db.tables.each do |table|
@@ -41,7 +40,7 @@ namespace :db do
   task :reset, [:env] => [:nuke, :migrate]
 
   desc "Create the database"
-  task :create, :env do |cmd, args|
+  task :create do
     db = Sequel.connect("postgres://localhost/postgres")
     envs.each do |env_file, env|
       begin
@@ -55,7 +54,7 @@ namespace :db do
   end
 
   desc "Drop the database"
-  task :drop, :env do |cmd, args|
+  task :drop do
     db = Sequel.connect("postgres://localhost/postgres")
     envs.each do |env_file, env|
       name = URI.parse(env["DATABASE_URL"]).path[1..-1]
@@ -66,7 +65,7 @@ namespace :db do
 
   namespace :schema do
     desc "Load the database schema"
-    task :load, :env do |cmd, args|
+    task :load do
       schema = File.read("./db/schema.sql")
       envs.each do |env_file, env|
         db = Sequel.connect(env["DATABASE_URL"])
@@ -76,7 +75,7 @@ namespace :db do
     end
 
     desc "Dump the database schema"
-    task :dump, :env do |cmd, args|
+    task :dump do
       env_file, env = envs.first
       `pg_dump -i -s -x -O -f ./db/schema.sql #{env["DATABASE_URL"]}`
       puts "Dumped schema"
