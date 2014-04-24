@@ -6,7 +6,6 @@ require "./lib/app"
 $stdout.sync = true
 
 App.initialize!
-
-require "./lib/models"
+App.require!(['lib/models'])
 
 run Routes
