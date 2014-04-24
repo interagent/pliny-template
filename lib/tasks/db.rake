@@ -2,69 +2,105 @@ require "uri"
 require "sequel"
 require "sequel/extensions/migration"
 
+require_relative "../../vendor/pliny/lib/pliny/utils"
+
 namespace :db do
   desc "Run database migrations"
-  task :migrate, :env do |cmd, args|
+  task :migrate do
     next if Dir["./db/migrate/*.rb"].empty?
-    Sequel.connect(ENV["DATABASE_URL"])
-    Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate")
-    puts "Migrated to the latest"
+    envs.each do |env_file, env|
+      db = Sequel.connect(env["DATABASE_URL"])
+      Sequel::Migrator.apply(db, "./db/migrate")
+      puts "Migrated `#{name_from_uri(env["DATABASE_URL"])}`"
+    end
   end
 
   desc "Rollback the database"
-  task :rollback, :env do |cmd, args|
+  task :rollback do
     next if Dir["./db/migrate/*.rb"].empty?
-    Sequel.connect(ENV["DATABASE_URL"])
-    Sequel::Migrator.apply(Sequel::Model.db, "./db/migrate", -1)
-    puts "Rolled back."
+    envs.each do |env_file, env|
+      db = Sequel.connect(env["DATABASE_URL"])
+      Sequel::Migrator.apply(db, "./db/migrate", -1)
+      puts "Rolled back `#{name_from_uri(env["DATABASE_URL"])}`"
+    end
   end
 
   desc "Nuke the database (drop all tables)"
-  task :nuke, :env do |cmd, args|
-    Sequel.connect(ENV["DATABASE_URL"])
-    Sequel::Model.db.tables.each do |table|
-      Sequel::Model.db.run(%{DROP TABLE "#{table}"})
+  task :nuke do
+    envs.each do |env_file, env|
+      db = Sequel.connect(env["DATABASE_URL"])
+      db.tables.each do |table|
+        db.run(%{DROP TABLE "#{table}"})
+      end
+      puts "Nuked `#{name_from_uri(env["DATABASE_URL"])}`"
     end
-    puts "Nuked database"
   end
 
   desc "Reset the database"
   task :reset, [:env] => [:nuke, :migrate]
 
   desc "Create the database"
-  task :create, :env do |cmd, args|
-    uri = URI.join(ENV["DATABASE_URL"], "/").to_s
-    db = Sequel.connect(uri)
-    name = URI.parse(ENV["DATABASE_URL"]).path[1..-1]
-    db.run(%{CREATE DATABASE "#{name}"})
-    puts "Database created"
+  task :create do
+    db = Sequel.connect("postgres://localhost/postgres")
+    envs.each do |env_file, env|
+      exists = false
+      name = name_from_uri(env["DATABASE_URL"])
+      begin
+        db.run(%{CREATE DATABASE "#{name}"})
+      rescue Sequel::DatabaseError
+        raise unless $!.message =~ /already exists/
+        exists = true
+      end
+      puts "Created `#{name}`" if !exists
+    end
   end
 
   desc "Drop the database"
-  task :drop, :env do |cmd, args|
-    uri = URI.join(ENV["DATABASE_URL"], "/").to_s
-    db = Sequel.connect(uri)
-    name = URI.parse(ENV["DATABASE_URL"]).path[1..-1]
-    db.run(%{DROP DATABASE IF EXISTS "#{name}"})
-    puts "Database dropped"
+  task :drop do
+    db = Sequel.connect("postgres://localhost/postgres")
+    envs.each do |env_file, env|
+      name = name_from_uri(env["DATABASE_URL"])
+      db.run(%{DROP DATABASE IF EXISTS "#{name}"})
+      puts "Dropped `#{name}`"
+    end
   end
 
   namespace :schema do
     desc "Load the database schema"
-    task :load, :env do |cmd, args|
-      db = Sequel.connect(ENV["DATABASE_URL"])
+    task :load do
       schema = File.read("./db/schema.sql")
-      db.run(schema)
-      puts "Loaded schema"
+      envs.each do |env_file, env|
+        db = Sequel.connect(env["DATABASE_URL"])
+        db.run(schema)
+        puts "Loaded `#{name_from_uri(env["DATABASE_URL"])}`"
+      end
     end
 
     desc "Dump the database schema"
-    task :dump, :env do |cmd, args|
-      `pg_dump -i -s -x -O -f ./db/schema.sql #{ENV["DATABASE_URL"]}`
-      puts "Dumped schema"
+    task :dump do
+      env_file, env = envs.first
+      `pg_dump -i -s -x -O -f ./db/schema.sql #{env["DATABASE_URL"]}`
+      puts "Dumped `#{name_from_uri(env["DATABASE_URL"])}`"
     end
   end
 
   desc "Setup the database"
   task :setup, [:env] => [:drop, :create]
+
+  private
+
+  def envs
+    %w(.env .env.test).map { |env_file|
+      env_path = "./#{env_file}"
+      if File.exists?(env_path)
+        [env_file, Pliny::Utils.parse_env(env_path)]
+      else
+        nil
+      end
+    }.compact
+  end
+
+  def name_from_uri(uri)
+    URI.parse(uri).path[1..-1]
+  end
 end
