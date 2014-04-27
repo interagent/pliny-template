@@ -15,7 +15,7 @@ And gems/helpers to tie these together and support operations:
 - [CORS middleware](vendor/pliny/lib/pliny/middleware/cors.rb) to allow JS developers to consume your API
 - [Honeybadger](https://www.honeybadger.io/) for tracking exceptions
 - [Log helper](vendor/pliny/test/log_test.rb) that logs in [data format](https://www.youtube.com/watch?v=rpmc-wHFUBs) [to stdout](https://adam.heroku.com/past/2011/4/1/logs_are_streams_not_files)
-- [Minitest](https://github.com/seattlerb/minitest) for lean and fast testing
+- [Rspec](https://github.com/rspec/rspec) for lean and fast testing
 - [Puma](http://puma.io/) as the web server, [configured for optimal performance on Heroku](config/puma.rb)
 - [Rack-test](https://github.com/brynary/rack-test) to test the API endpoints
 - [Request IDs](vendor/pliny/lib/pliny/middleware/request_id.rb)

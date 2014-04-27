@@ -1,4 +1,4 @@
-require "test_helper"
+require "spec_helper"
 
 describe Endpoints::<%= plural_class_name %> do
   include Rack::Test::Methods
@@ -10,7 +10,7 @@ describe Endpoints::<%= plural_class_name %> do
   describe "GET <%= url_path %>" do
     it "succeeds" do
       get "<%= url_path %>"
-      assert_equal 200, last_response.status
+      last_response.status.should eq(200)
     end
   end
 end
