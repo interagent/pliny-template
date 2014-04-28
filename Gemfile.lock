@@ -40,7 +40,7 @@ GEM
     multi_json (1.9.2)
     oj (2.6.1)
     pg (0.17.1)
-    prmd (0.1.1)
+    prmd (0.2.0)
       erubis (~> 2.7)
     puma (2.7.1)
       rack (>= 1.1, < 2.0)

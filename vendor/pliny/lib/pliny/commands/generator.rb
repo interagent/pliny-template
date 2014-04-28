@@ -159,9 +159,9 @@ module Pliny::Commands
     end
 
     def create_schema
-      schema = "./docs/schema/schemata/#{name.singularize}.json"
+      schema = "./docs/schema/schemata/#{name.singularize}.yaml"
       write_file(schema) do
-        Prmd.init(name.singularize)
+        Prmd.init(name.singularize, yaml: true)
       end
       display "created schema file #{schema}"
     end
