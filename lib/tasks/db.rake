@@ -8,31 +8,31 @@ namespace :db do
   desc "Run database migrations"
   task :migrate do
     next if Dir["./db/migrate/*.rb"].empty?
-    envs.each do |env_file, env|
-      db = Sequel.connect(env["DATABASE_URL"])
+    database_urls.each do |database_url|
+      db = Sequel.connect(database_url)
       Sequel::Migrator.apply(db, "./db/migrate")
-      puts "Migrated `#{name_from_uri(env["DATABASE_URL"])}`"
+      puts "Migrated `#{name_from_uri(database_url)}`"
     end
   end
 
   desc "Rollback the database"
   task :rollback do
     next if Dir["./db/migrate/*.rb"].empty?
-    envs.each do |env_file, env|
-      db = Sequel.connect(env["DATABASE_URL"])
+    database_urls.each do |database_url|
+      db = Sequel.connect(database_url)
       Sequel::Migrator.apply(db, "./db/migrate", -1)
-      puts "Rolled back `#{name_from_uri(env["DATABASE_URL"])}`"
+      puts "Rolled back `#{name_from_uri(database_url)}`"
     end
   end
 
   desc "Nuke the database (drop all tables)"
   task :nuke do
-    envs.each do |env_file, env|
-      db = Sequel.connect(env["DATABASE_URL"])
+    database_urls.each do |database_url|
+      db = Sequel.connect(database_url)
       db.tables.each do |table|
         db.run(%{DROP TABLE "#{table}"})
       end
-      puts "Nuked `#{name_from_uri(env["DATABASE_URL"])}`"
+      puts "Nuked `#{name_from_uri(database_url)}`"
     end
   end
 
@@ -42,9 +42,9 @@ namespace :db do
   desc "Create the database"
   task :create do
     db = Sequel.connect("postgres://localhost/postgres")
-    envs.each do |env_file, env|
+    database_urls.each do |database_url|
       exists = false
-      name = name_from_uri(env["DATABASE_URL"])
+      name = name_from_uri(database_url)
       begin
         db.run(%{CREATE DATABASE "#{name}"})
       rescue Sequel::DatabaseError
@@ -58,8 +58,8 @@ namespace :db do
   desc "Drop the database"
   task :drop do
     db = Sequel.connect("postgres://localhost/postgres")
-    envs.each do |env_file, env|
-      name = name_from_uri(env["DATABASE_URL"])
+    database_urls.each do |database_url|
+      name = name_from_uri(database_url)
       db.run(%{DROP DATABASE IF EXISTS "#{name}"})
       puts "Dropped `#{name}`"
     end
@@ -69,18 +69,18 @@ namespace :db do
     desc "Load the database schema"
     task :load do
       schema = File.read("./db/schema.sql")
-      envs.each do |env_file, env|
-        db = Sequel.connect(env["DATABASE_URL"])
+      database_urls.each do |database_url|
+        db = Sequel.connect(database_url)
         db.run(schema)
-        puts "Loaded `#{name_from_uri(env["DATABASE_URL"])}`"
+        puts "Loaded `#{name_from_uri(database_url)}`"
       end
     end
 
     desc "Dump the database schema"
     task :dump do
-      env_file, env = envs.first
-      `pg_dump -i -s -x -O -f ./db/schema.sql #{env["DATABASE_URL"]}`
-      puts "Dumped `#{name_from_uri(env["DATABASE_URL"])}` to db/schema.sql"
+      database_url = database_urls.first
+      `pg_dump -i -s -x -O -f ./db/schema.sql #{database_url}`
+      puts "Dumped `#{name_from_uri(database_url)}` to db/schema.sql"
     end
 
     desc "Merges migrations into schema and removes them"
@@ -95,15 +95,15 @@ namespace :db do
 
   private
 
-  def envs
-    %w(.env .env.test).map { |env_file|
+  def database_urls
+    ([ENV["DATABASE_URL"]] + %w(.env .env.test).map { |env_file|
       env_path = "./#{env_file}"
       if File.exists?(env_path)
-        [env_file, Pliny::Utils.parse_env(env_path)]
+        Pliny::Utils.parse_env(env_path)["DATABASE_URL"]
       else
         nil
       end
-    }.compact
+    }).compact
   end
 
   def name_from_uri(uri)
