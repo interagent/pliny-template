@@ -96,14 +96,18 @@ namespace :db do
   private
 
   def database_urls
-    ([ENV["DATABASE_URL"]] + %w(.env .env.test).map { |env_file|
-      env_path = "./#{env_file}"
-      if File.exists?(env_path)
-        Pliny::Utils.parse_env(env_path)["DATABASE_URL"]
-      else
-        nil
-      end
-    }).compact
+    if ENV["DATABASE_URL"]
+      [ENV["DATABASE_URL"]]
+    else
+      %w(.env .env.test).map { |env_file|
+        env_path = "./#{env_file}"
+        if File.exists?(env_path)
+          Pliny::Utils.parse_env(env_path)["DATABASE_URL"]
+        else
+          nil
+        end
+      }.compact
+    end
   end
 
   def name_from_uri(uri)
