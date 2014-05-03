@@ -1,5 +1,5 @@
 require "multi_json"
-require "sinatra"
+require "sinatra/base"
 
 module Pliny ; end
 
