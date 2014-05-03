@@ -4,7 +4,7 @@ function main {
   set -e
 
   ensure_foreman_installed
-  cp .env.sample .env
+  add_new_env_vars
   bundle install
   rake db:setup db:schema:load db:migrate
 }
@@ -14,6 +14,21 @@ function ensure_foreman_installed {
     echo >&2 'Could not find `foreman` executable. Please install it.';
     false;
   }
+}
+
+function add_new_env_vars {
+  touch .env
+  export IFS=$'\n'
+  for var in `cat .env.sample`; do
+    key="${var%%=*}"     # get var key
+    var=`eval echo $var` # generate dynamic values
+
+    # If .env doesn't contain this env key, add it
+    if ! `grep -qLE "^$key=" .env`; then
+      echo "Adding $key to .env"
+      echo $var >> .env
+    fi
+  done
 }
 
 main
