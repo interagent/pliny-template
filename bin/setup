@@ -3,17 +3,9 @@
 function main {
   set -e
 
-  ensure_foreman_installed
   add_new_env_vars
   bundle install
   rake db:setup db:schema:load db:migrate
-}
-
-function ensure_foreman_installed {
-  hash foreman 2>/dev/null || {
-    echo >&2 'Could not find `foreman` executable. Please install it.';
-    false;
-  }
 }
 
 function add_new_env_vars {
