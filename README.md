@@ -31,7 +31,7 @@ Clone this repo, then:
 
 ```bash
 $ bin/setup
-$ foreman start web
+$ bundle exec foreman start web
 ```
 
 There are some generators to help you get started:
