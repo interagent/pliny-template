@@ -22,13 +22,13 @@ describe Endpoints::<%= plural_class_name %> do
 
   it "GET <%= url_path %>/:id" do
     get "<%= url_path %>/123"
-    last_response.status.should eq(201)
+    last_response.status.should eq(200)
     last_response.body.should eq("{}")
   end
 
   it "PATCH <%= url_path %>/:id" do
     patch "<%= url_path %>/123"
-    last_response.status.should eq(201)
+    last_response.status.should eq(200)
     last_response.body.should eq("{}")
   end
 
