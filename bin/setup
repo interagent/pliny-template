@@ -6,7 +6,7 @@ function main {
   ensure_foreman_installed
   add_new_env_vars
   bundle install
-  rake db:setup db:schema:load db:migrate
+  bundle exec rake db:setup db:schema:load db:migrate
 }
 
 function ensure_foreman_installed {
@@ -32,4 +32,3 @@ function add_new_env_vars {
 }
 
 main
-

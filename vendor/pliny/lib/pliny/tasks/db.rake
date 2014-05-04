@@ -1,8 +1,8 @@
-require "uri"
 require "sequel"
 require "sequel/extensions/migration"
+require "uri"
 
-require_relative "../../vendor/pliny/lib/pliny/utils"
+require "pliny/utils"
 
 namespace :db do
   desc "Run database migrations"
@@ -37,7 +37,7 @@ namespace :db do
   end
 
   desc "Reset the database"
-  task :reset, [:env] => [:nuke, :migrate]
+  task :reset => [:nuke, :migrate]
 
   desc "Create the database"
   task :create do
@@ -91,7 +91,7 @@ namespace :db do
   end
 
   desc "Setup the database"
-  task :setup, [:env] => [:drop, :create]
+  task :setup => [:drop, :create]
 
   private
 
