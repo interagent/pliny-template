@@ -64,13 +64,13 @@ To test your application:
 
 ```bash
 createdb pliny-test
-rake
+bundle exec rake
 ```
 
 Or to run a single test suite:
 
 ```bash
-ruby -Itest test/acceptance/artists_test.rb
+bundle exec rspec spec/acceptance/artists_spec.rb
 ```
 
 ## Meta
