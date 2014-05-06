@@ -27,6 +27,11 @@ And gems/helpers to tie these together and support operations:
 
 ## Getting started
 
+First make sure the following is installed:
+
+* [Postgres](http://www.postgresql.org/)
+    * The [uuid-ossp](http://www.postgresql.org/docs/9.3/static/uuid-ossp.html) module for Postgres
+
 Clone this repo, then:
 
 ```bash
