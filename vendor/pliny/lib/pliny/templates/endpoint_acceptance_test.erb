@@ -34,7 +34,7 @@ describe Endpoints::<%= plural_class_name %> do
 
   it "DELETE <%= url_path %>/:id" do
     delete "<%= url_path %>/123"
-    last_response.status.should eq("{}")
+    last_response.status.should eq(200)
     last_response.body.should eq("{}")
   end
 end
