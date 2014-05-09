@@ -49,11 +49,11 @@ describe Pliny::Commands::Generator do
       end
 
       it "creates an endpoint test" do
-        assert File.exists?("test/endpoints/artists_test.rb")
+        assert File.exists?("spec/endpoints/artists_spec.rb")
       end
 
       it "creates an endpoint acceptance test" do
-        assert File.exists?("test/acceptance/artists_test.rb")
+        assert File.exists?("spec/acceptance/artists_spec.rb")
       end
     end
 
@@ -68,7 +68,7 @@ describe Pliny::Commands::Generator do
       end
 
       it "creates a test" do
-        assert File.exists?("test/mediators/artists/creator_test.rb")
+        assert File.exists?("spec/mediators/artists/creator_spec.rb")
       end
     end
 
@@ -87,7 +87,7 @@ describe Pliny::Commands::Generator do
       end
 
       it "creates a test" do
-        assert File.exists?("test/models/artist_test.rb")
+        assert File.exists?("spec/models/artist_spec.rb")
       end
     end
 
@@ -102,11 +102,11 @@ describe Pliny::Commands::Generator do
       end
 
       it "creates an endpoint test" do
-        assert File.exists?("test/endpoints/artists_test.rb")
+        assert File.exists?("spec/endpoints/artists_spec.rb")
       end
 
       it "creates an endpoint acceptance test" do
-        assert File.exists?("test/acceptance/artists_test.rb")
+        assert File.exists?("spec/acceptance/artists_spec.rb")
       end
 
       it "creates a migration" do
@@ -118,11 +118,11 @@ describe Pliny::Commands::Generator do
       end
 
       it "creates a test" do
-        assert File.exists?("test/models/artist_test.rb")
+        assert File.exists?("spec/models/artist_spec.rb")
       end
 
       it "creates a schema" do
-        assert File.exists?("docs/schema/schemata/artists.json")
+        assert File.exists?("docs/schema/schemata/artist.yaml")
       end
     end
 
@@ -133,7 +133,7 @@ describe Pliny::Commands::Generator do
       end
 
       it "creates a schema" do
-        assert File.exists?("docs/schema/schemata/artists.json")
+        assert File.exists?("docs/schema/schemata/artist.yaml")
       end
     end
   end
