@@ -15,9 +15,14 @@ module Initializer
   end
 
   def self.require_lib
-    files = Pliny::Utils.glob("lib/**/*.rb")
-    require! files - ["lib/routes.rb"]
-    require! "lib/routes.rb"
+    require! %w(
+      lib/endpoints/base
+      lib/endpoints/**/*.rb
+      lib/mediators/base
+      lib/mediators/**/*.rb
+      lib/models/**/*.rb
+      lib/routes
+    )
   end
 
   def self.require_initializers
