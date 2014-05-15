@@ -4,8 +4,6 @@ require "irb"
 require "irb/completion"
 require "bundler"
 Bundler.require
-require "./lib/app"
-App.initialize!
-App.require!(['lib/models/**/*'])
+require "./lib/initializer"
 
 IRB.start

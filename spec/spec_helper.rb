@@ -12,17 +12,15 @@ Bundler.require(:default, :test)
 
 require "rr"
 
-require_relative "../lib/app"
+root = File.expand_path("../../", __FILE__)
+ENV.update(Pliny::Utils.parse_env("#{root}/.env.test"))
+
+require_relative "../lib/initializer"
 
 DatabaseCleaner.strategy = :transaction
 
-ENV.update(Pliny::Utils.parse_env("#{App.root}/.env.test"))
-
-App.initialize!
-App.require!(['lib/models/**/*'])
-
 # pull in test initializers
-Pliny::Utils.require_glob("#{App.root}/spec/support/**/*.rb")
+Pliny::Utils.require_glob("#{Initializer.root}/spec/support/**/*.rb")
 
 RSpec.configure do |config|
   config.mock_framework = :rr
