@@ -54,9 +54,10 @@ created test ./test/mediators/artists/creator_test.rb
 
 $ bundle exec pliny-generate endpoint artists
 created endpoint file ./lib/endpoints/artists.rb
-add the following to lib/app/main:
-  use App::Main::Artists
-created test ./test/endpoints/artists_test.rb
+add the following to lib/routes.rb:
+  mount Endpoints::Artists
+created test ./spec/endpoints/artists_spec.rb
+created test ./spec/acceptance/artists_spec.rb
 
 $ bundle exec pliny-generate migration fix_something
 created migration ./db/migrate/1395873228_fix_something.rb
