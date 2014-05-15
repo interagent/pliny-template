@@ -63,7 +63,8 @@ $ bundle exec pliny-generate migration fix_something
 created migration ./db/migrate/1395873228_fix_something.rb
 
 $ bundle exec pliny-generate schema artists
-created schema file ./docs/schema/schemata/artists.json
+created schema file ./docs/schema/schemata/artist.yaml
+rebuilt ./docs/schema.json
 ```
 
 To test your application:
