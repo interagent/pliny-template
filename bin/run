@@ -1,0 +1,7 @@
+#!/usr/bin/env ruby
+
+require "bundler"
+Bundler.require
+require "./lib/initializer"
+
+eval ARGV.join(" ")
