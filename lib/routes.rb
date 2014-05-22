@@ -7,6 +7,7 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::Timeout, timeout: 45
   use Rack::Deflater
   use Rack::MethodOverride
+  use Rack::SSL if Config.rack_env == "production"
 
   use Pliny::Router do
     # mount all endpoints here
