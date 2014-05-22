@@ -11,19 +11,7 @@ class Serializers
     end
 
     def serialize(object)
-      if object.is_a?(Array)
-        object.map do |item|
-          serialize_item(item, @type)
-        end
-      else
-        serialize_item(object, @type)
-      end
-    end
-
-    private
-
-    def serialize_item(item, type)
-      @@structures["#{self.name}::#{type}"].call(item)
+      @@structures["#{self.class.name}::#{@type}"].call(object)
     end
   end
 end
