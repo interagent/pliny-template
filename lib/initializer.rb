@@ -7,7 +7,7 @@ module Initializer
   end
 
   def self.require_config
-    require! "config/config.rb"
+    require! "config/config"
   end
 
   def self.initialize_database
@@ -17,10 +17,10 @@ module Initializer
   def self.require_lib
     require! %w(
       lib/endpoints/base
-      lib/endpoints/**/*.rb
+      lib/endpoints/**/*
       lib/mediators/base
-      lib/mediators/**/*.rb
-      lib/models/**/*.rb
+      lib/mediators/**/*
+      lib/models/**/*
       lib/routes
     )
   end
@@ -32,7 +32,7 @@ module Initializer
   def self.require!(globs)
     globs = [globs] unless globs.is_a?(Array)
     globs.each do |f|
-      Pliny::Utils.require_glob("#{root}/#{f}")
+      Pliny::Utils.require_glob("#{root}/#{f}.rb")
     end
   end
 
