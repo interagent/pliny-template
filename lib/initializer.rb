@@ -22,6 +22,8 @@ module Initializer
       lib/mediators/**/*
       lib/models/**/*
       lib/routes
+      lib/serializers/base
+      lib/serializers/**/*.rb
     )
   end
 
