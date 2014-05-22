@@ -70,7 +70,6 @@ rebuilt ./docs/schema.json
 To test your application:
 
 ```bash
-createdb pliny-test
 bundle exec rake
 ```
 
