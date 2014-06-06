@@ -25,6 +25,10 @@ Pliny::Utils.require_glob("#{Initializer.root}/spec/support/**/*.rb")
 RSpec.configure do |config|
   config.mock_framework = :rr
 
+  config.before :all do
+    load('db/seeds.rb') if File.exist?('db/seeds.rb')
+  end
+  
   config.before :each do
     DatabaseCleaner.start
   end
