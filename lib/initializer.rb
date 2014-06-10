@@ -23,7 +23,7 @@ module Initializer
       lib/models/**/*
       lib/routes
       lib/serializers/base
-      lib/serializers/**/*.rb
+      lib/serializers/**/*
     )
   end
 
