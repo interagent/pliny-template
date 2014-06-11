@@ -1,5 +1,5 @@
-module Endpoints
-  # The base class for all Sinatra-based endpoints. Use sparingly.
+module Resources
+  # The base class for all Sinatra-based resources. Use sparingly.
   class Base < Sinatra::Base
     register Pliny::Extensions::Instruments
     register Sinatra::Namespace

@@ -16,8 +16,8 @@ module Initializer
 
   def self.require_lib
     require! %w(
-      lib/endpoints/base
-      lib/endpoints/**/*
+      lib/resources/base
+      lib/resources/**/*
       lib/mediators/base
       lib/mediators/**/*
       lib/models/**/*

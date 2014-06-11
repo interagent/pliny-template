@@ -1,4 +1,4 @@
-module Endpoints
+module Resources
   class Root < Base
     get "/" do
       "hello."

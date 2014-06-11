@@ -10,9 +10,9 @@ Routes = Rack::Builder.new do
   use Rack::SSL if Config.rack_env == "production"
 
   use Pliny::Router do
-    # mount all endpoints here
+    # mount all resources here
   end
 
   # root app; but will also handle some defaults like 404
-  run Endpoints::Root
+  run Resources::Root
 end
