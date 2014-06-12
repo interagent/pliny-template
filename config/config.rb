@@ -21,6 +21,8 @@ module Config
   optional \
     :honeybadger_api_key,
     :placeholder
+    :versioning_default,
+    :versioning_app_name
 
   # Override -- value is returned or the set default. Remember to typecast.
   override \
@@ -33,4 +35,5 @@ module Config
     rescue_errors:    'true',
     timeout:          45,
     force_ssl:        'true',
+    versioning:       'false'
 end
