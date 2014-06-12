@@ -1,6 +1,9 @@
 Routes = Rack::Builder.new do
   use Pliny::Middleware::RescueErrors unless Config.rack_env == "development"
   use Honeybadger::Rack::ErrorNotifier if Config.honeybadger_api_key
+  use Committee::Middleware::RequestValidation,
+    schema: MultiJson.decode(File.read(Initializer.root + "/docs/schema.json")),
+    strict: true
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID
   use Pliny::Middleware::RequestStore, store: Pliny::RequestStore
