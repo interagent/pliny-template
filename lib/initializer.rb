@@ -1,17 +1,13 @@
 module Initializer
   def self.run
     require_config
-    initialize_database
     require_lib
     require_initializers
+    require_models
   end
 
   def self.require_config
     require! "config/config"
-  end
-
-  def self.initialize_database
-    Sequel.connect(Config.database_url, max_connections: Config.db_pool)
   end
 
   def self.require_lib
@@ -20,10 +16,15 @@ module Initializer
       lib/endpoints/**/*
       lib/mediators/base
       lib/mediators/**/*
-      lib/models/**/*
       lib/routes
       lib/serializers/base
       lib/serializers/**/*
+    )
+  end
+
+  def self.require_models
+    require! %w(
+      lib/models/**/*
     )
   end
 
