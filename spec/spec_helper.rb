@@ -10,8 +10,6 @@ ENV["RACK_ENV"] = "test"
 require "bundler"
 Bundler.require(:default, :test)
 
-require "rr"
-
 root = File.expand_path("../../", __FILE__)
 ENV.update(Pliny::Utils.parse_env("#{root}/.env.test"))
 
@@ -23,8 +21,6 @@ DatabaseCleaner.strategy = :transaction
 Pliny::Utils.require_glob("#{Initializer.root}/spec/support/**/*.rb")
 
 RSpec.configure do |config|
-  config.mock_framework = :rr
-
   config.before :all do
     load('db/seeds.rb') if File.exist?('db/seeds.rb')
   end
@@ -37,7 +33,6 @@ RSpec.configure do |config|
     DatabaseCleaner.clean
   end
 
-  config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
