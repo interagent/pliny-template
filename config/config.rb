@@ -29,5 +29,8 @@ module Config
     puma_max_threads: 16,
     puma_min_threads: 1,
     puma_workers:     3,
-    rack_env:         "development"
+    rack_env:         'development',
+    rescue_errors:    'true',
+    timeout:          45,
+    force_ssl:        'true',
 end
