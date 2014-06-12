@@ -19,6 +19,7 @@ module Config
 
   # Optional -- value is returned or `nil` if it wasn't present.
   optional \
+    :honeybadger_api_key,
     :placeholder
 
   # Override -- value is returned or the set default. Remember to typecast.
