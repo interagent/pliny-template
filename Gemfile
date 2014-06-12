@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 ruby "2.1.2"
 
-gem "honeybadger"
+gem "honeybadger", '~> 1.14'
 gem "multi_json"
 gem "oj"
 gem "pg"
