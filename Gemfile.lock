@@ -18,7 +18,7 @@ GEM
     foreman (0.67.0)
       dotenv (~> 0.7.0)
       thor (~> 0.17.0)
-    honeybadger (1.13.0)
+    honeybadger (1.15.0)
       json
     http_accept (0.1.5)
     i18n (0.6.9)
@@ -84,7 +84,7 @@ DEPENDENCIES
   committee
   database_cleaner
   foreman
-  honeybadger
+  honeybadger (~> 1.14)
   multi_json
   oj
   pg

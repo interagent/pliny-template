@@ -1,6 +1,6 @@
 Routes = Rack::Builder.new do
   use Pliny::Middleware::RescueErrors unless Config.rack_env == "development"
-  use Honeybadger::Rack
+  use Honeybadger::Rack::ErrorNotifier if Config.honeybadger_api_key
   use Pliny::Middleware::CORS
   use Pliny::Middleware::RequestID
   use Pliny::Middleware::RequestStore, store: Pliny::RequestStore
