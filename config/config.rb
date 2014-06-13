@@ -21,6 +21,8 @@ module Config
   optional \
     :honeybadger_api_key,
     :placeholder
+    :versioning_default,
+    :versioning_app_name
 
   # Override -- value is returned or the set default. Remember to typecast.
   override \
@@ -29,5 +31,9 @@ module Config
     puma_max_threads: 16,
     puma_min_threads: 1,
     puma_workers:     3,
-    rack_env:         "development"
+    rack_env:         'development',
+    rescue_errors:    'true',
+    timeout:          45,
+    force_ssl:        'true',
+    versioning:       'false'
 end
