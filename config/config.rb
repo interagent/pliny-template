@@ -20,7 +20,7 @@ module Config
   # Optional -- value is returned or `nil` if it wasn't present.
   optional \
     :honeybadger_api_key,
-    :placeholder
+    :placeholder,
     :versioning_default,
     :versioning_app_name
 
