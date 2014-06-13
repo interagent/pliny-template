@@ -3,6 +3,7 @@ module Endpoints
   class Base < Sinatra::Base
     register Pliny::Extensions::Instruments
     register Sinatra::Namespace
+    helpers Pliny::Helpers::Params
 
     configure :development do
       register Sinatra::Reloader
