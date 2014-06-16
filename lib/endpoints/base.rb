@@ -6,6 +6,7 @@ module Endpoints
 
     helpers Pliny::Helpers::Params
 
+    set :dump_errors, false
     set :raise_errors, true
     set :show_exceptions, false
 
