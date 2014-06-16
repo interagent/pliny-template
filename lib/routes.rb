@@ -7,10 +7,10 @@ Routes = Rack::Builder.new do
   use Pliny::Middleware::Timeout, timeout: Config.timeout.to_i if Config.timeout.to_i > 0
   use Pliny::Middleware::Versioning,
       default: Config.versioning_default,
-      app_name: Config.versioning_app_name if Config.versioning.downcase == 'true'
+      app_name: Config.versioning_app_name if Config.versioning? == 'true'
   use Rack::Deflater
   use Rack::MethodOverride
-  use Rack::SSL if Config.force_ssl.downcase == 'true'
+  use Rack::SSL if Config.force_ssl? == 'true'
 
   use Pliny::Router do
     # mount all endpoints here
