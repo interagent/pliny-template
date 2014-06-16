@@ -32,7 +32,7 @@ module Config
     puma_min_threads: 1,
     puma_workers:     3,
     rack_env:         'development',
-    rescue_errors:    'true',
+    raise_errors:     'false',
     timeout:          45,
     force_ssl:        'true',
     versioning:       'false'
