@@ -24,7 +24,5 @@ group :test do
   gem "committee"
   gem "database_cleaner"
   gem "rack-test"
-  gem "rr", require: false
-  gem "rspec-core"
-  gem "rspec-expectations"
+  gem "rspec"
 end
