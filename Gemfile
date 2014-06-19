@@ -5,6 +5,8 @@ gem "multi_json"
 gem "oj"
 gem "pg"
 gem "pliny"
+gem "pry"
+gem "pry-doc"
 gem "puma"
 gem "rack-ssl"
 gem "rake"
@@ -16,6 +18,10 @@ gem "sinatra", require: "sinatra/base"
 gem "sinatra-contrib", require: ["sinatra/namespace", "sinatra/reloader"]
 gem "sinatra-router"
 gem "sucker_punch"
+
+group :development, :test do
+  gem "pry-byebug"
+end
 
 group :development do
   gem "foreman"

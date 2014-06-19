@@ -1,9 +1,7 @@
 #!/usr/bin/env ruby
 
-require "irb"
-require "irb/completion"
 require "bundler"
 Bundler.require
 require "./lib/initializer"
 
-IRB.start
+binding.pry
