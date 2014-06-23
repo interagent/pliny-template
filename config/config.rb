@@ -32,6 +32,7 @@ module Config
     puma_workers:     3,
     rack_env:         'development',
     raise_errors:     'false',
+    root:             File.expand_path("../../", __FILE__),
     timeout:          45,
     force_ssl:        'true',
     versioning:       'false'
