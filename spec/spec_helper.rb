@@ -18,7 +18,7 @@ require_relative "../lib/initializer"
 DatabaseCleaner.strategy = :transaction
 
 # pull in test initializers
-Pliny::Utils.require_glob("#{Initializer.root}/spec/support/**/*.rb")
+Pliny::Utils.require_glob("#{Config.root}/spec/support/**/*.rb")
 
 RSpec.configure do |config|
   config.before :all do

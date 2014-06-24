@@ -7,7 +7,7 @@ module Initializer
   end
 
   def self.require_config
-    require! "config/config"
+    require_relative "../config/config"
   end
 
   def self.require_lib
@@ -29,18 +29,14 @@ module Initializer
   end
 
   def self.require_initializers
-    Pliny::Utils.require_glob("#{root}/config/initializers/*.rb")
+    Pliny::Utils.require_glob("#{Config.root}/config/initializers/*.rb")
   end
 
   def self.require!(globs)
     globs = [globs] unless globs.is_a?(Array)
     globs.each do |f|
-      Pliny::Utils.require_glob("#{root}/#{f}.rb")
+      Pliny::Utils.require_glob("#{Config.root}/#{f}.rb")
     end
-  end
-
-  def self.root
-    @@root ||= File.expand_path("../../", __FILE__)
   end
 end
 
