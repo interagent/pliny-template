@@ -1,9 +1,31 @@
 #!/usr/bin/env ruby
 
-require "irb"
-require "irb/completion"
 require "bundler"
 Bundler.require
 require "./lib/initializer"
 
-IRB.start
+def basic_prompt(target_self, nest_level, pry)
+  # override CONSOLE_BANNER to include something like a release identifier
+  nesting = nest_level.zero? ? "" : ":#{nest_level}"
+  "[#{pry.input_array.size}] #{console_prefix}(#{Pry.view_clip(target_self)})#{nesting}"
+end
+
+def console_prefix
+  if Config.console_banner
+    Config.console_banner
+  elsif Config.rack_env == "production"
+    "production"
+  end
+end
+
+Pry.prompt = [
+   proc { |target_self, nest_level, pry|
+     basic_prompt(target_self, nest_level, pry) + "> "
+   },
+
+   proc { |target_self, nest_level, pry|
+     basic_prompt(target_self, nest_level, pry) + "* "
+   }
+]
+
+Pry.start

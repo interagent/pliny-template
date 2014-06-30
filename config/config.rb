@@ -19,6 +19,7 @@ module Config
 
   # Optional -- value is returned or `nil` if it wasn't present.
   optional \
+    :console_banner,
     :placeholder,
     :versioning_default,
     :versioning_app_name
