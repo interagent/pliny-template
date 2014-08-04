@@ -11,7 +11,14 @@ class Serializers
     end
 
     def serialize(object)
-      @@structures["#{self.class.name}::#{@type}"].call(object)
+      object.respond_to?(:map) ? object.map{|item| serializer.call(item)} : serializer.call(object)
     end
+
+    private
+
+    def serializer
+      @@structures["#{self.class.name}::#{@type}"]
+    end
+
   end
 end
