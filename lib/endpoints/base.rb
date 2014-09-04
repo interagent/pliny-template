@@ -4,6 +4,7 @@ module Endpoints
     register Pliny::Extensions::Instruments
     register Sinatra::Namespace
 
+    helpers Pliny::Helpers::Encode
     helpers Pliny::Helpers::Params
 
     set :dump_errors, false
