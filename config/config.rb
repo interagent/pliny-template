@@ -30,4 +30,5 @@ module Config
   override :timeout,          45,    int
   override :force_ssl,        true,  bool
   override :versioning,       false, bool
+  override :pretty_json,      false, bool
 end
