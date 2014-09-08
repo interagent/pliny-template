@@ -1,7 +1,4 @@
-require "bundler"
-Bundler.require
-
-require "./lib/initializer"
+require_relative 'lib/application'
 
 $stdout.sync = true
 
