@@ -1,8 +1,6 @@
 #!/usr/bin/env ruby
 
-require "bundler"
-Bundler.require
-require "./lib/initializer"
+require_relative '../lib/application'
 
 def basic_prompt(target_self, nest_level, pry)
   # override CONSOLE_BANNER to include something like a release identifier
