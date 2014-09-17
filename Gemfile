@@ -24,6 +24,7 @@ group :development, :test do
 end
 
 group :development do
+  gem 'dotenv'
   gem "foreman"
 end
 

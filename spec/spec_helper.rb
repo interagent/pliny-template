@@ -10,8 +10,8 @@ ENV["RACK_ENV"] = "test"
 require "bundler"
 Bundler.require(:default, :test)
 
-root = File.expand_path("../../", __FILE__)
-ENV.update(Pliny::Utils.parse_env("#{root}/.env.test"))
+require 'dotenv'
+Dotenv.load('.env.test')
 
 require_relative "../lib/initializer"
 

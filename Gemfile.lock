@@ -115,6 +115,7 @@ PLATFORMS
 DEPENDENCIES
   committee
   database_cleaner
+  dotenv
   foreman
   multi_json
   oj
