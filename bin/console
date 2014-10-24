@@ -3,17 +3,9 @@
 require_relative '../lib/application'
 
 def basic_prompt(target_self, nest_level, pry)
-  # override CONSOLE_BANNER to include something like a release identifier
+  # override DEPLOYMENT to identify console sessions (eg: staging/production/etc)
   nesting = nest_level.zero? ? "" : ":#{nest_level}"
-  "[#{pry.input_array.size}] #{console_prefix}(#{Pry.view_clip(target_self)})#{nesting}"
-end
-
-def console_prefix
-  if Config.console_banner
-    Config.console_banner
-  elsif Config.rack_env == "production"
-    "production"
-  end
+  "[#{pry.input_array.size}] #{Config.deployment}(#{Pry.view_clip(target_self)})#{nesting}"
 end
 
 Pry.prompt = [
