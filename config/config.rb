@@ -13,13 +13,13 @@ module Config
   mandatory :database_url, string
 
   # Optional -- value is returned or `nil` if it wasn't present.
-  optional :console_banner,      string
   optional :placeholder,         string
   optional :versioning_default,  string
   optional :versioning_app_name, string
 
   # Override -- value is returned or the set default.
   override :db_pool,          5,    int
+  override :deployment,       'production', string
   override :port,             5000, int
   override :puma_max_threads, 16,   int
   override :puma_min_threads, 1,    int
