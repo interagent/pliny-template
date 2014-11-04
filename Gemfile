@@ -23,13 +23,10 @@ group :development, :test do
   gem "pry-byebug"
 end
 
-group :development do
-  gem "dotenv"
-end
-
 group :test do
   gem "committee"
   gem "database_cleaner"
+  gem "dotenv"
   gem "rack-test"
   gem "rspec"
 end
