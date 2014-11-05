@@ -5,7 +5,7 @@ function main {
 
   add_new_env_vars
   bundle install
-  bundle exec rake db:setup db:schema:load db:migrate
+  bundle exec rake db:setup
 }
 
 function add_new_env_vars {
