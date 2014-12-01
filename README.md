@@ -2,3 +2,6 @@
 
 Please refer to:
 https://github.com/interagent/pliny
+
+To the actual template files:
+https://github.com/interagent/pliny/tree/master/lib/template
